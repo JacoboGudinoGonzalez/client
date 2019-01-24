@@ -1,0 +1,26 @@
+<!--<div class="rela-block container">
+	<div class="rela-block profile-card">
+		<div *ngFor="let user of userArray" class="item">
+			<div class="pad15">
+				<p>{{user.name}}</p>
+				<p class="lead">
+					<img src="{{url+'getImageFile/'+user.image}}" style="width: 100px;">
+				</p>
+				<p>{{user.email}}</p>
+				<p>{{user.tel}}</p>
+				<p>
+					<a *ngFor="let item of BlockID(user.rating); let i=index " (click)="setStar(i)">
+						<i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
+					</a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>-->
+
+<div class="col-lg-8 col-lg-offset-2">
+	<div class="jumbotron">
+		<h1>{{title}}</h1>
+	</div>
+
+</div>
