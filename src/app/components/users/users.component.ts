@@ -31,8 +31,8 @@ export class UsersComponent implements OnInit{
 	){
         this.title = 'Usuarios';
 		this.identity = this._usuarioService.getIdentity();
-        this.token = this._usuarioService.getToken();;
-        this.url = GLOBAL.url+"controller/"
+        this.token = this._usuarioService.getToken();
+        this.url = GLOBAL.url+"controller/";
     }
     
     ngOnInit() {

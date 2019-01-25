@@ -24,7 +24,7 @@ export class SidebarComponent implements OnInit {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.stats = this._userService.getStats();
-    this.url = GLOBAL.url;
+    this.url = GLOBAL.url+"controller/";
   }
 
   ngOnInit() {

@@ -23,9 +23,6 @@
                 </div>
             </div>
         </div>
-        page: {{page}} pages: {{pages}}
-        next_page: {{next_page}}
-        prev_page: {{prev_page}}
         <ul class="pagination pull-right">
             <li *ngIf="page > 1"><a [routerLink]="['/gente', prev_page]">Anterior</a></li>
             <li *ngIf="pages != page"><a [routerLink]="['/gente', next_page]">Siguiente</a></li>
