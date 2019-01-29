@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Usuario } from '../../models/usuario';
+import { Follow } from '../../models/follow';
 import { UsuarioService } from '../../services/usuario.service';
+import { FollowService } from '../../services/follow.service';
 import { GLOBAL } from '../../services/global';
 
 @Component({
 	selector: 'users',
     templateUrl: './users.component.html',
-    providers: [UsuarioService]
+    providers: [UsuarioService, FollowService]
 	//styleUrls: ['./register.component.css']
 })
 
@@ -22,12 +24,14 @@ export class UsersComponent implements OnInit{
     public pages;
     public users: Usuario[];
     public status: string;
+    public follows
     public url;
     
     constructor(
 		private _route: ActivatedRoute,
 		private _router: Router,
-		private _usuarioService: UsuarioService
+        private _usuarioService: UsuarioService,
+        private _followService: FollowService
 	){
         this.title = 'Usuarios';
 		this.identity = this._usuarioService.getIdentity();
@@ -36,7 +40,6 @@ export class UsersComponent implements OnInit{
     }
     
     ngOnInit() {
-        console.log("componentn users cargao");
         this.actualPage();
     }
     
@@ -71,10 +74,10 @@ export class UsersComponent implements OnInit{
                 if(!response.item){
                     this.status = 'error';
                 }else{
-                    console.log(response);
                     this.total = response.total;
                     this.users = response.item;
                     this.pages = response.pages;
+                    this.follows = response.following;
                     if(page>this.pages){
                         this._router.navigate(['/gente',1]);
                     }
@@ -82,12 +85,64 @@ export class UsersComponent implements OnInit{
             },
             error=>{
                 var errorMessage = <any>error;
-                //console.log(errorMessage);
-
                 if(errorMessage!=null){
                     this.status = 'error';
                     this._router.navigate(['/gente',1]);
                 }
+            }
+        );
+    }
+
+    public followUserOver;
+    mouseEnter(user_id){
+        this.followUserOver = user_id;
+    }
+
+    mouseLeave(user_id){
+        this.followUserOver = 0;
+    }
+
+    followUser(followedId){
+        var usuario = new Usuario(this.identity.id,'','','','','','',0,'');
+        var followed = new Usuario(followedId,'','','','','','',0,'');
+        var follow = new Follow('',usuario,followed);
+
+        this._followService.addFollow(this.token, follow).subscribe(
+            response =>{
+                if(!response.follow){
+                    this.status = 'error';
+                }else{
+                    this.status = 'success';
+                    this.follows.push(followed.id);
+                }
+            },
+            error =>{
+                var errorMessage = <any>error;
+                if(errorMessage!=null){
+                    this.status = 'error';
+                } 
+            }
+        );
+    }
+
+    unFollowUser(followed){
+        this._followService.deleteFollow(this.token, followed).subscribe(
+            response =>{
+                if(!response.msj){
+                    this.status = 'error';
+                }else{
+                    this.status = 'success';
+                    var search = this.follows.indexOf(followed);
+                    if(search!=-1){
+                        this.follows.splice(search,1);
+                    }
+                }
+            },
+            error =>{
+                var errorMessage = <any>error;
+                if(errorMessage!=null){
+                    this.status = 'error';
+                } 
             }
         );
     }

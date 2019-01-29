@@ -46,9 +46,7 @@ export class LoginComponent implements OnInit{
 								console.log("el token no se ha generado");
 							}else{
 								localStorage.setItem('token', this.token);
-								this.status = 'success';
-								// this.getCounters();
-								this._router.navigate(['/']);
+								this.getCounters();
 							}
 							this.usuario = new Usuario('','','','','','','',0,'');
 						},
@@ -73,7 +71,8 @@ export class LoginComponent implements OnInit{
 	getCounters(){
 		this._usuarioService.getCounters().subscribe(
 			response =>{
-				console.log(response);
+				localStorage.setItem('stats', JSON.stringify(response));
+				this.status = 'success';
 				this._router.navigate(['/']);
 			},
 			error => {

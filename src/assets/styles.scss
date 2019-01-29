@@ -1,3 +1,4 @@
+@import '~css-star-rating/scss/star-rating';
 .h1-strong{
     font-size: 35px;
     font-weight: bold;
@@ -60,7 +61,7 @@
 }
 
 .item-user .image-user img{
-    width: 120px;
+    width: 100%;
 }
 
 .item-user .user-name{
@@ -74,4 +75,17 @@
 .item-user .user-name .name-surname a{
     color: #555;
     font-weight: bold;
+}
+
+/*star rating*/
+.checked {
+    color: orange;
+}
+
+.rating:focus{
+    outline: none!important; 
+}
+
+.star.disabled, .rating.disabled .star-container .star {
+    opacity: 1;
 }

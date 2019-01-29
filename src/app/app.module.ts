@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-// import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { StarRatingModule } from 'angular-star-rating';
 
 import { routing, appRoutingProviders } from './app.routing';
 import { AppComponent } from './app.component';
@@ -31,7 +31,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     BrowserModule,
     routing,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    StarRatingModule.forRoot()
   ],
   providers: [
     appRoutingProviders, UsuarioService, UploadService

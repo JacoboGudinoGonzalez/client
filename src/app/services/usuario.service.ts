@@ -10,6 +10,7 @@ export class UsuarioService{
 	public url: string;
 	public identity; 
 	public token;
+	public stats;
 
 	constructor(private _http: HttpClient){
 		this.url = GLOBAL.url+"controller/";
@@ -75,12 +76,12 @@ export class UsuarioService{
 	getStats(){
 		let stats = JSON.parse(localStorage.getItem('stats'));
 
-		/*if(stats!=undefined){
+		if(stats!=undefined){
 			this.stats = stats;
 		}else{
 			this.stats=null;
 		}
-		return this.stats;*/
+		return this.stats;
 	}
 
 	getCounters(userId=null):Observable<any>{
@@ -89,7 +90,7 @@ export class UsuarioService{
 		if(userId!=null){
 			return this._http.get(this.url+'counters/'+userId, {headers:headers});
 		} else{
-			return this._http.get(this.url+'counters', {headers:headers});
+			return this._http.get(this.url+'counters/'+this.identity.id, {headers:headers});
 		}
 	}
 }
