@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from '../../models/Usuario';
+import { Usuario } from '../../models/usuario';
 import { UsuarioService } from '../../services/usuario.service';
 import { UploadService } from '../../services/upload.service';
+import { GLOBAL } from '../../services/global';
 
 @Component({
 	selector: 'usuario-edit',
@@ -24,7 +25,7 @@ export class UsuarioEditComponent implements OnInit {
 		this.identity = this._usuarioService.getIdentity();
 		this.token = this._usuarioService.getToken();
 		this.usuario = this.identity;
-		this.url = 'http://localhost:8081/petProject/rest/controller/';
+		this.url = GLOBAL.url+"controller/";
 	}
 
 	ngOnInit() {

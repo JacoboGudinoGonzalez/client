@@ -12,6 +12,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { UsuarioEditComponent } from './components/usuario-edit/usuario-edit.component';
 // import { SelectCuidadorComponent } from './components/select-cuidador/select-cuidador.component';
 import { UsersComponent } from './components/users/users.component';
+import { TimelineComponent } from './components/timeline/timeline.component';
 
 const appRoutes: Routes = [
 	{path: 'home', component: HomeComponent},
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
 	{path: 'mis-datos', component: UsuarioEditComponent},
 	{path: 'gente', component: UsersComponent},
 	{path: 'gente/:page', component: UsersComponent},
+	{path: 'timeline', component: TimelineComponent},
 	// {path: 'selecciona-cuidador', component: SelectCuidadorComponent},
 	{path: '**', component: HomeComponent}
 ];
