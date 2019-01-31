@@ -40,29 +40,29 @@ export class UsersComponent implements OnInit{
     }
     
     ngOnInit() {
-        this.actualPage();
+        if(GLOBAL.verifyIdentity(this.identity)){
+            this._router.navigate(['/login']);
+        }else{
+            this.actualPage();
+        }
     }
     
     actualPage(){
         this._route.params.subscribe(params =>{
             let page = +params['page'];
             this.page = page;
-
             if(!params['page']){
                 page=1;
             }
-
             if(!page){
                 page=1;
             }else{
                 this.next_page = page+1;
                 this.prev_page = page-1;
-
                 if(this.prev_page<=0){
                     this.prev_page=1;
                 }
             }
-
             //devolver listado de usuarios
             this.getUsers(page);
         });
@@ -85,10 +85,14 @@ export class UsersComponent implements OnInit{
             },
             error=>{
                 var errorMessage = <any>error;
-                if(errorMessage!=null){
-                    this.status = 'error';
-                    this._router.navigate(['/gente',1]);
-                }
+				if (errorMessage != null) {
+					this.status = 'error';
+					if (GLOBAL.unauthorized(errorMessage, this.token)){
+						this._router.navigate(['/login']);
+					}else{
+						console.log(errorMessage);
+					}
+				}
             }
         );
     }
@@ -118,9 +122,14 @@ export class UsersComponent implements OnInit{
             },
             error =>{
                 var errorMessage = <any>error;
-                if(errorMessage!=null){
-                    this.status = 'error';
-                } 
+				if (errorMessage != null) {
+					this.status = 'error';
+					if (GLOBAL.unauthorized(errorMessage, this.token)){
+						this._router.navigate(['/login']);
+					}else{
+						console.log(errorMessage);
+					}
+				}
             }
         );
     }
@@ -140,9 +149,14 @@ export class UsersComponent implements OnInit{
             },
             error =>{
                 var errorMessage = <any>error;
-                if(errorMessage!=null){
-                    this.status = 'error';
-                } 
+				if (errorMessage != null) {
+					this.status = 'error';
+					if (GLOBAL.unauthorized(errorMessage, this.token)){
+						this._router.navigate(['/login']);
+					}else{
+						console.log(errorMessage);
+					}
+				}
             }
         );
     }

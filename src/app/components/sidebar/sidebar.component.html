@@ -1,5 +1,5 @@
 <div class="col-lg-4 sidebar-32">
-    <h1 class="h1-strong">Hola {{identity.name}}!!!</h1>
+  <h1 class="h1-strong">Hola {{identity.name}}!!!</h1>
 </div>
 <div id="user-card" class="col-lg-4 panel panel-default pull-left">
   <div class="avatar pull-left">
@@ -12,6 +12,7 @@
       {{identity.name}}
     </a>
     <p class="nickname">{{identity.description}}</p>
+
     <div class="clearfix"></div>
   </div>
   <div class="clearfix"></div>
@@ -52,15 +53,17 @@
   </div>
 </div>
 
+
+
 <!-- FORM DE PUBLICACIONES -->
 <div id="new-publication" class="conl-lg-4 panel panel-default pull-left">
   <div class="alert alert-success" *ngIf="status=='success'">
     Publicacion enviada correctamente
   </div>
-  <div class="alert alert-danger" *ngIf="status=='danger'">
-      Publicacion no enviada
-    </div>
-  <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm)" class="col-lg-10">
+  <div class="alert alert-danger" *ngIf="status=='error'">
+    Publicacion no enviada
+  </div>
+  <form #newPubForm="ngForm" (ngSubmit)="onSubmit(newPubForm); sendPublication($event);" class="col-lg-10">
     <p>
       <label>¿Que estas pensando hoy?</label>
       <textarea name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" required></textarea>
@@ -70,10 +73,10 @@
     </p>
 
     <p>
-        <label>Sube una imagen</label>
-        <input type="file" placeholder="sube una imagen" />
-      </p>
-      <input type="submit" value="Enviar" class="btn btn-success" [disabled]="!newPubForm.form.valid">
+      <label>Sube una imagen</label>
+      <input type="file" placeholder="sube una imagen" />
+    </p>
+    <input type="submit" value="Enviar" class="btn btn-success" [disabled]="!newPubForm.form.valid">
   </form>
 
 </div>

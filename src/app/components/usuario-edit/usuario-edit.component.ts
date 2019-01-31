@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Usuario } from '../../models/usuario';
 import { UsuarioService } from '../../services/usuario.service';
 import { UploadService } from '../../services/upload.service';
@@ -18,6 +19,7 @@ export class UsuarioEditComponent implements OnInit {
 	public msj: string;
 
 	constructor(
+		private _router: Router,
 		private _usuarioService: UsuarioService,
 		private _uploadService: UploadService
 	) {
@@ -25,11 +27,15 @@ export class UsuarioEditComponent implements OnInit {
 		this.identity = this._usuarioService.getIdentity();
 		this.token = this._usuarioService.getToken();
 		this.usuario = this.identity;
-		this.url = GLOBAL.url+"controller/";
+		this.url = GLOBAL.url + "controller/";
 	}
 
 	ngOnInit() {
-		console.log(this.identity);
+		if(GLOBAL.verifyIdentity(this.identity)){
+            this._router.navigate(['/login']);
+        }else{
+
+        }
 	}
 
 	onSubmit() {
@@ -53,9 +59,15 @@ export class UsuarioEditComponent implements OnInit {
 				}
 			},
 			error => {
-				this.msj = error.error.msj;
-				this.status = 'error';
-				this.onActivate();
+				var errorMessage = <any>error;
+				if (errorMessage != null) {
+					this.status = 'error';
+					if (GLOBAL.unauthorized(errorMessage, this.token)){
+						this._router.navigate(['/login']);
+					}else{
+						console.log(errorMessage);
+					}
+				}
 			}
 		);
 	}

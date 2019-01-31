@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Usuario } from '../../models/Usuario';
 import { UsuarioService } from '../../services/usuario.service';
+import { GLOBAL } from '../../services/global';
 
 
 @Component({
@@ -15,9 +17,11 @@ export class HomeComponent implements OnInit {
 	public identity;
 	public token;
 	public userArray;
+	public status:string;
 
 	constructor(
-		private _usuarioService: UsuarioService
+		private _usuarioService: UsuarioService,
+		private _router: Router
 	) {
 		this.title = 'HOME';
 		this.identity = this._usuarioService.getIdentity();
@@ -26,17 +30,28 @@ export class HomeComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		//this.getUsers();
+		if(GLOBAL.verifyIdentity(this.identity)){
+            this._router.navigate(['/login']);
+        }else{
+            
+        }
 	}
 
 	getUsers() {
 		this._usuarioService.getUsers(this.usuario).subscribe(
 			response => {
 				this.userArray = response.users;
-				console.log(this.userArray);
 			},
 			error => {
-				console.log("error");
+				var errorMessage = <any>error;
+				if (errorMessage != null) {
+					this.status = 'error';
+					if (GLOBAL.unauthorized(errorMessage, this.token)){
+						this._router.navigate(['/login']);
+					}else{
+						console.log(errorMessage);
+					}
+				}
 			}
 		);
 	}

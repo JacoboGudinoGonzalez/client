@@ -1,0 +1,13 @@
+<div class="col-lg-8"> 
+  <h1 class="h1-strong">{{title}}</h1>
+  <div class="data-profile">
+
+    <div id="avatar">
+        <img src="{{url+'getImageFile/'+identity.image}}" *ngIf="identity.image">
+        <img src="{{url+'getImageFile/'+identity.default}}" *ngIf="!identity.image">
+    </div>
+
+  </div>
+</div>
+
+<sidebar></sidebar>

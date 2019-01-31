@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { PublicationService } from '../../services/publication.service';
 import { GLOBAL } from '../../services/global';
 import { Publication } from '../../models/publication';
 
 @Component({
-  selector: 'timeline',
-  templateUrl: './timeline.component.html',
+  selector: 'publications',
+  templateUrl: './publications.component.html',
   providers: [UsuarioService, PublicationService]
 
 })
-export class TimelineComponent implements OnInit {
+export class PublicationsComponent implements OnInit {
 
   public title: string;
   public identity;
@@ -28,11 +28,12 @@ export class TimelineComponent implements OnInit {
   public message:string;
 
   constructor(
+    private _route: ActivatedRoute,
     private _router: Router,
     private _userService: UsuarioService,
     private _publicationService: PublicationService
   ) {
-    this.title = 'Timeline';
+    this.title = 'Publications';
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = GLOBAL.url + "publicationController/";
@@ -69,10 +70,6 @@ export class TimelineComponent implements OnInit {
             this._router.navigate(['/home']);
           }
 
-          if(this.total<this.itemsPerPage || this.page == this.pages){
-            this.noMore=true;
-          }
-
         } else {
           if(response.msj==0){
             this.message = 'No estas siguiendo a ningun usuario :(';
@@ -99,11 +96,7 @@ export class TimelineComponent implements OnInit {
       this.noMore = true;
     }else{
       this.page+=1;
-      this.getPublications(this.page, true);
     }
-  }
-
-  refresh(event){
-    this.getPublications(1);
+    this.getPublications(this.page, true);
   }
 }

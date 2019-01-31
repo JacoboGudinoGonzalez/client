@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 //Components
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
-// import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileComponent } from './components/profile/profile.component';
 // import { ClienteComponent } from './components/cliente/cliente.component';
 // import { CuidadorComponent } from './components/cuidador/cuidador.component';
 // import { ContactoComponent } from './components/contacto/contacto.component';
@@ -17,7 +17,7 @@ import { TimelineComponent } from './components/timeline/timeline.component';
 const appRoutes: Routes = [
 	{path: 'home', component: HomeComponent},
 	{path: '', redirectTo: 'home', pathMatch: 'full'},
-	// {path: 'profile', component: ProfileComponent},
+	{path: 'profile/:id', component: ProfileComponent},
 	{path: 'login', component: LoginComponent},
 	// {path: 'cliente', component: ClienteComponent},
 	// {path: 'cuidador', component: CuidadorComponent},

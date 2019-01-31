@@ -70,7 +70,7 @@ export class UsuarioService{
 	getUser(id: string):Observable<any>{
 		let headers = new HttpHeaders().set('Content-Type','application/json')
 									   .set('Authorization',this.getToken());
-		return this._http.get(this.url+"getUser/"+id, {headers: headers});
+		return this._http.get(this.url+"user/"+id, {headers: headers});
 	}
 
 	getStats(){

@@ -42,6 +42,5 @@ export class RegisterComponent implements OnInit{
 				console.log(<any>error);
 			}
 		);
-		console.log(this.usuario );
 	}
 }

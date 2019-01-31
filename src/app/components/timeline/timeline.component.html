@@ -1,4 +1,32 @@
 <div class="col-lg-8">
-  <h1 class="">{{title}}</h1>
+  <h1 class="h1-strong">
+    {{title}}
+    <button class="btn btn-success btn-sm pull-right" (click)="refresh($event)">refresh</button>
+  </h1>
+  
+  <div id="publications">
+    <h2>{{message}}</h2>
+    <div *ngFor="let publication of publications" class="item-publication">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="image-user pull-left">
+            <a href="#">
+              <img src="{{urlUser+'getImageFile/'+publication.usuario.image}}" *ngIf="publication.usuario.image">
+            </a>
+          </div>
+          <div class="user-name"><b>{{publication.usuario.name}}</b> <span class="span-gray"> {{ publication.createdAt
+              | amLocale:'es' | amTimeAgo }}</span></div>
+          <h4 class="publication-text pull-left">
+            {{publication.text}}
+          </h4>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-12">
+      <button type="button" class="btn btn-default pull-right" (click)="viewMore()" *ngIf="!noMore">Ver más..</button>
+    </div>
+  </div>
+</div>
 
-</div>>
+<sidebar (sended)="refresh($event)"></sidebar>
+<div class="clearfix"></div>
