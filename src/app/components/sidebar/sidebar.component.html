@@ -74,7 +74,7 @@
 
     <p>
       <label>Sube una imagen</label>
-      <input type="file" placeholder="sube una imagen" />
+      <input type="file" placeholder="sube una imagen" (change)="fileEventChange($event)"/>
     </p>
     <input type="submit" value="Enviar" class="btn btn-success" [disabled]="!newPubForm.form.valid">
   </form>

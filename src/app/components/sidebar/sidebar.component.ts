@@ -5,12 +5,13 @@ import { PublicationService } from '../../services/publication.service';
 import { GLOBAL } from '../../services/global';
 import { Publication } from '../../models/publication';
 import { Usuario } from '../../models/usuario';
+import { UploadService } from '../../services/upload.service';
 
 @Component({
   selector: 'sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
-  providers: [UsuarioService, PublicationService]
+  providers: [UsuarioService, PublicationService, UploadService]
 })
 export class SidebarComponent implements OnInit {
 
@@ -19,6 +20,7 @@ export class SidebarComponent implements OnInit {
   public token;
   public stats;
   public url;
+  public urlPublication;
   public status;
   public message: string;
   public usuario: Usuario;
@@ -27,12 +29,14 @@ export class SidebarComponent implements OnInit {
   constructor(
     private _router: Router,
     private _userService: UsuarioService,
-    private _publicationService: PublicationService
+    private _publicationService: PublicationService,
+    private _uploadService: UploadService
   ) {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.stats = this._userService.getStats();
     this.url = GLOBAL.url + "controller/";
+    this.urlPublication = GLOBAL.url + "publicationController/"
     this.usuario = new Usuario(this.identity == null ? 0 : this.identity.id, '', '', '', '', '', '', 0, '');
     this.publication = new Publication('', '', '', new Date(), this.usuario);
   }
@@ -49,9 +53,14 @@ export class SidebarComponent implements OnInit {
     this._publicationService.addPublication(this.token, this.publication).subscribe(
       response => {
         if (response.publication) {
-          form.reset();
-          this.status = 'success';
-          this.sleepExample();
+          //SubirImagen
+          this._uploadService.makeFileRequest(this.urlPublication + 'upload/' + response.publication.id, [], this.filesToUpload, this.token, 'file')
+            .then((result: any) => {
+              this.publication.file = result.image;
+              form.reset();
+              this.status = 'success';
+              this.sleepExample();
+            });
         } else {
           this.status = 'error';
           this.sleepExample();
@@ -71,6 +80,11 @@ export class SidebarComponent implements OnInit {
     );
   }
 
+  public filesToUpload: Array<File>;
+  fileEventChange(fileInput: any) {
+    this.filesToUpload = <Array<File>>fileInput.target.files;
+  }
+
   private delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
@@ -83,7 +97,7 @@ export class SidebarComponent implements OnInit {
   }
 
   @Output() sended = new EventEmitter();
-  sendPublication(event){
-    this.sended.emit({send:'true'});
+  sendPublication(event) {
+    this.sended.emit({ send: 'true' });
   }
 }

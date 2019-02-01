@@ -19,6 +19,12 @@
           <h4 class="publication-text pull-left">
             {{publication.text}}
           </h4>
+          <div class="col-lg-12">
+            <button class="btn btn-warning pull-right"><span class="glyphicon glyphicon-picture"></span></button>
+          </div>
+          <div class="col-lg-12" *ngIf="publication.file && showImage == publication.id">
+              <img src="{{urlUser+'getImageFile/'+publication.file}}" class="col-lg-12">
+          </div>
         </div>
       </div>
     </div>

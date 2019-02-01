@@ -26,6 +26,7 @@ export class TimelineComponent implements OnInit {
   public itemsPerPage;
   public publications: Publication[];
   public message:string;
+  public showImage;
 
   constructor(
     private _router: Router,
@@ -107,5 +108,9 @@ export class TimelineComponent implements OnInit {
 
   refresh(event){
     this.getPublications(1);
+  }
+
+  showThisImage(id){
+    this.showImage=id;
   }
 }
