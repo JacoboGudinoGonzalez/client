@@ -16,7 +16,7 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-12 text-center">
-    <button type="button" class="btn btn-default" (click)="viewMore()" *ngIf="!noMore">Ver más..</button>
-  </div>
+</div>
+<div class="col-lg-12" *ngIf="publications && publications.length">
+  <button type="button" class="btn btn-default pull-right" (click)="viewMore()" *ngIf="!noMore">Ver más..</button>
 </div>

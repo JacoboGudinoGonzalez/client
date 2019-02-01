@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as $ from 'jquery';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
@@ -26,6 +26,7 @@ export class PublicationsComponent implements OnInit {
   public itemsPerPage;
   public publications: Publication[];
   public message:string;
+  @Input() user:string;
 
   constructor(
     private _route: ActivatedRoute,
@@ -45,12 +46,12 @@ export class PublicationsComponent implements OnInit {
     if (GLOBAL.verifyIdentity(this.identity)) {
       this._router.navigate(['/login']);
     } else {
-      this.getPublications(this.page);
+      this.getPublications(this.user, this.page);
     }
   }
 
-  getPublications(page, adding=false) {
-    this._publicationService.getPublications(this.token, page).subscribe(
+  getPublications(user, page, adding=false) {
+    this._publicationService.getPublicationsUser(this.token, user, page).subscribe(
       response => {
         if (response.item) {
           this.total = response.total;
@@ -63,11 +64,15 @@ export class PublicationsComponent implements OnInit {
             var arrayB = response.item;
             this.publications = arrayA.concat(arrayB);
 
-            $("html, body").animate({ scrollTop: $('body').prop("scrollHeight")},500);
+            $("html, body").animate({ scrollTop: $('html').prop("scrollHeight")},500);
           }
 
           if (page > this.pages) {
             this._router.navigate(['/home']);
+          }
+
+          if(this.total<this.itemsPerPage || this.page == this.pages){
+            this.noMore=true;
           }
 
         } else {
@@ -92,11 +97,10 @@ export class PublicationsComponent implements OnInit {
 
   public noMore = false;
   viewMore(){
-    if(this.publications.length==this.total){
+    this.page+=1;
+    if(this.page==this.pages){
       this.noMore = true;
-    }else{
-      this.page+=1;
     }
-    this.getPublications(this.page, true);
+    this.getPublications(this.user, this.page, true);
   }
 }

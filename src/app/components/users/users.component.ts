@@ -102,14 +102,15 @@ export class UsersComponent implements OnInit{
         this.followUserOver = user_id;
     }
 
-    mouseLeave(user_id){
+    mouseLeave(){
         this.followUserOver = 0;
     }
 
     followUser(followedId){
-        var usuario = new Usuario(this.identity.id,'','','','','','',0,'');
-        var followed = new Usuario(followedId,'','','','','','',0,'');
-        var follow = new Follow('',usuario,followed);
+        var follow = new Follow('',
+            new Usuario(this.identity.id,'','','','','','',0,''),
+            new Usuario(followedId,'','','','','','',0,'')
+        );
 
         this._followService.addFollow(this.token, follow).subscribe(
             response =>{
@@ -117,7 +118,7 @@ export class UsersComponent implements OnInit{
                     this.status = 'error';
                 }else{
                     this.status = 'success';
-                    this.follows.push(followed.id);
+                    this.follows.push(followedId);
                 }
             },
             error =>{
@@ -134,7 +135,7 @@ export class UsersComponent implements OnInit{
         );
     }
 
-    unFollowUser(followed){
+    unfollowUser(followed){
         this._followService.deleteFollow(this.token, followed).subscribe(
             response =>{
                 if(!response.msj){

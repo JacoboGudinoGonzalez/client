@@ -15,13 +15,14 @@ import { Usuario } from '../../models/usuario';
 export class ProfileComponent implements OnInit {
 
   public title: string;
-  public user:Usuario;
-  public status:string;
+  public user: Usuario;
+  public status: string;
   public url: string;
   public identity;
   public token;
   public stats;
-  public follow:Follow;
+  public followed;
+  public following;
 
   constructor(
     private _router: Router,
@@ -33,6 +34,8 @@ export class ProfileComponent implements OnInit {
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = GLOBAL.url + "controller/";
+    this.followed = false;
+    this.following = false;
   }
 
   ngOnInit() {
@@ -43,30 +46,44 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  loadPage(){
-    this._route.params.subscribe(params =>{
+  loadPage() {
+    this._route.params.subscribe(params => {
       let id = params['id'];
       this.getUser(id);
       this.getCounters(id);
     });
   }
 
-  getUser(id){
+  getUser(id) {
     this._userService.getUser(id).subscribe(
-      response=>{
-        if(response[0].user && response[1].follow){
-          this.user=response[0].user;
-          this.follow=response[1].follow;
-        }else{
-          this.status='error';
+      response => {
+        console.log(response);
+        if (response[0].user) {
+          this.user = response[0].user;
+          if (response[1].following) {
+            if (response[1].following.id) {
+              this.following = true;
+            } else {
+              this.following = false;
+            }
+          }
+          if (response[2].followed) {
+            if (response[2].followed.id) {
+              this.followed = true;
+            } else {
+              this.followed = false;
+            }
+          }
+        } else {
+          this.status = 'error';
         }
       },
-      error=>{
+      error => {
         var errorMessage = <any>error;
         if (errorMessage != null) {
           this.status = 'error';
           if (GLOBAL.unauthorized(errorMessage, this.token)) {
-            this._router.navigate(['profile/',this.identity.id]);
+            this._router.navigate(['profile/', this.identity.id]);
           } else {
             console.log(errorMessage);
           }
@@ -75,24 +92,74 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  getCounters(id){
+  getCounters(id) {
     this._userService.getCounters(id).subscribe(
-      response=>{
-        console.log(response);
-        this.stats=response;
+      response => {
+        this.stats = response;
       },
-      error=>{
+      error => {
         var errorMessage = <any>error;
         if (errorMessage != null) {
           this.status = 'error';
           if (GLOBAL.unauthorized(errorMessage, this.token)) {
-            this._router.navigate(['login/',this.identity.id]);
+            this._router.navigate(['login/', this.identity.id]);
           } else {
             console.log(errorMessage);
           }
         }
       }
     );
+  }
+
+  followUser(followed) {
+    var follow = new Follow('',
+      new Usuario(this.identity.id, '', '', '', '', '', '', 0, ''),
+      new Usuario(followed, '', '', '', '', '', '', 0, '')
+    );
+    this._followService.addFollow(this.token, follow).subscribe(
+      response => {
+        this.following = true;
+      },
+      error => {
+        var errorMessage = <any>error;
+        if (errorMessage != null) {
+          this.status = 'error';
+          if (GLOBAL.unauthorized(errorMessage, this.token)) {
+            this._router.navigate(['/login']);
+          } else {
+            console.log(errorMessage);
+          }
+        }
+      }
+    );
+  }
+
+  unfollowUser(followed) {
+    this._followService.deleteFollow(this.token, followed).subscribe(
+      response => {
+        this.following = false;
+      },
+      error => {
+        var errorMessage = <any>error;
+        if (errorMessage != null) {
+          this.status = 'error';
+          if (GLOBAL.unauthorized(errorMessage, this.token)) {
+            this._router.navigate(['/login']);
+          } else {
+            console.log(errorMessage);
+          }
+        }
+      }
+    );
+  }
+
+  public followUserOver;
+  mouseEnter(user_id) {
+    this.followUserOver = user_id;
+  }
+
+  mouseLeave() {
+    this.followUserOver = 0;
   }
 
 }

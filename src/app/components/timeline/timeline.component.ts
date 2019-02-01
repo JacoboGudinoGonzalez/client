@@ -62,15 +62,18 @@ export class TimelineComponent implements OnInit {
             var arrayB = response.item;
             this.publications = arrayA.concat(arrayB);
 
-            $("html, body").animate({ scrollTop: $('body').prop("scrollHeight")},500);
+            $("html, body").animate({ scrollTop: $('html').prop("scrollHeight")},500);
           }
 
           if (page > this.pages) {
             this._router.navigate(['/home']);
           }
 
-          if(this.total<this.itemsPerPage || this.page == this.pages){
+          if(this.total<this.itemsPerPage || page == this.pages){
             this.noMore=true;
+          }else{
+            this.page=page;
+            this.noMore=false;
           }
 
         } else {
@@ -95,12 +98,11 @@ export class TimelineComponent implements OnInit {
 
   public noMore = false;
   viewMore(){
-    if(this.publications.length==this.total){
+    this.page+=1;
+    if(this.page==this.pages){
       this.noMore = true;
-    }else{
-      this.page+=1;
-      this.getPublications(this.page, true);
     }
+    this.getPublications(this.page, true);
   }
 
   refresh(event){
