@@ -25,6 +25,7 @@ export class SidebarComponent implements OnInit {
   public message: string;
   public user: User;
   public publication: Publication;
+  @Output() sended = new EventEmitter();
 
   constructor(
     private _router: Router,
@@ -49,7 +50,7 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  onSubmit(form) {
+  onSubmit(form, $event) {
     this._publicationService.addPublication(this.token, this.publication).subscribe(
       response => {
         if (response.publication) {
@@ -60,11 +61,13 @@ export class SidebarComponent implements OnInit {
                 this.publication.file = result.image;
                 form.reset();
                 this.status = 'success';
+                this.sended.emit({ send: 'true' });
                 this.sleepExample();
               });
           }else{
             form.reset();
             this.status = 'success';
+            this.sended.emit({ send: 'true' });
             this.sleepExample();
           }
         } else {
@@ -100,10 +103,5 @@ export class SidebarComponent implements OnInit {
     this.status = '';
     await this.delay(500);
     this._router.navigate(['/timeline']);
-  }
-
-  @Output() sended = new EventEmitter();
-  sendPublication(event) {
-    this.sended.emit({ send: 'true' });
   }
 }

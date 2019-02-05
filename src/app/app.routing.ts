@@ -13,6 +13,8 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
 // import { SelectCuidadorComponent } from './components/select-cuidador/select-cuidador.component';
 import { UsersComponent } from './components/users/users.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
+import { FollowingComponent } from './components/following/following.component';
+import { FollowedComponent } from './components/followed/followed.component';
 
 const appRoutes: Routes = [
 	{path: 'home', component: HomeComponent},
@@ -20,7 +22,8 @@ const appRoutes: Routes = [
 	{path: 'profile/:id', component: ProfileComponent},
 	{path: 'login', component: LoginComponent},
 	// {path: 'cliente', component: ClienteComponent},
-	// {path: 'cuidador', component: CuidadorComponent},
+	{path: 'siguiendo/:id/:page', component: FollowingComponent},
+	{path: 'siguidores/:id/:page', component: FollowedComponent},
 	// {path: 'contacto', component: ContactoComponent},
 	{path: 'registro', component: RegisterComponent},
 	{path: 'mis-datos', component: UserEditComponent},
