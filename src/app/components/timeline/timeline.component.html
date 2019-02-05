@@ -3,7 +3,7 @@
     {{title}}
     <button class="btn btn-success btn-sm pull-right" (click)="refresh($event)">refresh</button>
   </h1>
-  
+
   <div id="publications">
     <h2>{{message}}</h2>
     <div *ngFor="let publication of publications" class="item-publication">
@@ -14,16 +14,51 @@
               <img src="{{urlUser+'getImageFile/'+publication.usuario.image}}" *ngIf="publication.usuario.image">
             </a>
           </div>
-          <div class="user-name"><a [routerLink]="['/profile',publication.usuario.id]"><b>{{publication.usuario.name}}</b></a><span class="span-gray"> {{ publication.createdAt
+          <div class="user-name"><a [routerLink]="['/profile',publication.usuario.id]"><b>{{publication.usuario.name}}</b></a><span
+              class="span-gray"> {{ publication.createdAt
               | amLocale:'es' | amTimeAgo }}</span></div>
           <h4 class="publication-text pull-left">
             {{publication.text}}
           </h4>
-          <div class="col-lg-12">
-            <button class="btn btn-warning pull-right"><span class="glyphicon glyphicon-picture"></span></button>
+          <div class="pull-right" *ngIf="publication.usuario.id==identity.id">
+              &nbsp;
+            <!-- Button HTML (to Trigger Modal) -->
+            <a href="#myModal{{publication.id}}" role="button" class="btn btn-large btn-danger" data-toggle="modal" *ngIf="publication.usuario.id==identity.id">
+                <span class="glyphicon glyphicon-trash"></span>
+            </a>
+            
+            <!-- Modal HTML -->
+            <div id="myModal{{publication.id}}" class="modal fade">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">¿Seguro que deseas borrar la publicación?</h4>
+                  </div>
+                  <div class="modal-body">
+                    <p>Si lo borras no podrás recuperarlo</p>
+                    <p class="text-warning"><small>{{publication.text}}</small></p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deletePublication(publication.id)">Borrar publicación</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="pull-right" *ngIf="publication.file">
+            <button class="btn btn-warning pull-right" (click)="showThisImage(publication.id)" *ngIf="showImage!=publication.id">
+              <span class="glyphicon glyphicon-picture"></span>
+            </button>
+            <button class="btn btn-danger pull-right" (click)="hideThisImage()" *ngIf="showImage==publication.id">
+              <span class="glyphicon glyphicon-remove-circle"></span>
+            </button>
           </div>
           <div class="col-lg-12" *ngIf="publication.file && showImage == publication.id">
-              <img src="{{urlUser+'getImageFile/'+publication.file}}" class="col-lg-12">
+            <br />
+            <img src="{{urlUser+'getImageFile/'+publication.file}}" class="col-lg-12">
           </div>
         </div>
       </div>

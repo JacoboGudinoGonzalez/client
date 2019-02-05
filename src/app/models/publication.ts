@@ -6,7 +6,7 @@ export class Publication{
 		public text: string,
 		public file: string,
 		public createdAt: Date,
-		public user: User
+		public usuario: User
 	){
 		
 	}

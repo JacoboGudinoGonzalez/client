@@ -1,6 +1,7 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { UserService } from './services/user.service';
 import { Router } from '@angular/router';
+import { GLOBAL } from './services/global';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent implements DoCheck, OnInit {
       private _router: Router
     ){
     this.title= 'PET';
-    this.url = 'http://localhost:8081/petProject/rest/controller/';
+    this.url = GLOBAL.url+"controller/";
   }
 
   ngOnInit(){
