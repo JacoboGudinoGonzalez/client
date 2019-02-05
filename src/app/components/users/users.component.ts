@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Usuario } from '../../models/usuario';
+import { User } from '../../models/user';
 import { Follow } from '../../models/follow';
-import { UsuarioService } from '../../services/usuario.service';
+import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
 import { GLOBAL } from '../../services/global';
 
 @Component({
 	selector: 'users',
     templateUrl: './users.component.html',
-    providers: [UsuarioService, FollowService]
-	//styleUrls: ['./register.component.css']
+    providers: [UserService, FollowService]
 })
 
 export class UsersComponent implements OnInit{
@@ -22,7 +21,7 @@ export class UsersComponent implements OnInit{
     public prev_page;
     public total;
     public pages;
-    public users: Usuario[];
+    public users: User[];
     public status: string;
     public follows
     public url;
@@ -30,12 +29,12 @@ export class UsersComponent implements OnInit{
     constructor(
 		private _route: ActivatedRoute,
 		private _router: Router,
-        private _usuarioService: UsuarioService,
+        private _userService: UserService,
         private _followService: FollowService
 	){
         this.title = 'Usuarios';
-		this.identity = this._usuarioService.getIdentity();
-        this.token = this._usuarioService.getToken();
+		this.identity = this._userService.getIdentity();
+        this.token = this._userService.getToken();
         this.url = GLOBAL.url+"controller/";
     }
     
@@ -69,7 +68,7 @@ export class UsersComponent implements OnInit{
     }
 
     getUsers(page){
-        this._usuarioService.getUsers(page).subscribe(
+        this._userService.getUsers(page).subscribe(
             response =>{
                 if(!response.item){
                     this.status = 'error';
@@ -108,8 +107,8 @@ export class UsersComponent implements OnInit{
 
     followUser(followedId){
         var follow = new Follow('',
-            new Usuario(this.identity.id,'','','','','','',0,''),
-            new Usuario(followedId,'','','','','','',0,'')
+            new User(this.identity.id,'','','','','','',0,''),
+            new User(followedId,'','','','','','',0,'')
         );
 
         this._followService.addFollow(this.token, follow).subscribe(

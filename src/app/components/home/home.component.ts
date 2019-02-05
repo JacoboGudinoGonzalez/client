@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Usuario } from '../../models/Usuario';
-import { UsuarioService } from '../../services/usuario.service';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
 import { GLOBAL } from '../../services/global';
 
 
@@ -13,20 +13,20 @@ import { GLOBAL } from '../../services/global';
 
 export class HomeComponent implements OnInit {
 	public title: string;
-	public usuario: Usuario;
+	public user: User;
 	public identity;
 	public token;
 	public userArray;
 	public status:string;
 
 	constructor(
-		private _usuarioService: UsuarioService,
+		private _userService: UserService,
 		private _router: Router
 	) {
 		this.title = 'HOME';
-		this.identity = this._usuarioService.getIdentity();
-		this.token = this._usuarioService.getToken();
-		this.usuario = this.identity;
+		this.identity = this._userService.getIdentity();
+		this.token = this._userService.getToken();
+		this.user = this.identity;
 	}
 
 	ngOnInit() {
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	getUsers() {
-		this._usuarioService.getUsers(this.usuario).subscribe(
+		this._userService.getUsers(this.user).subscribe(
 			response => {
 				this.userArray = response.users;
 			},

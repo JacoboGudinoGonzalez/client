@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Usuario } from '../../models/usuario';
-import { UsuarioService } from '../../services/usuario.service';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
 import { UploadService } from '../../services/upload.service';
 import { GLOBAL } from '../../services/global';
 
 @Component({
-	selector: 'usuario-edit',
-	templateUrl: './usuario-edit.component.html'
+	selector: 'user-edit',
+	templateUrl: './user-edit.component.html'
 })
-export class UsuarioEditComponent implements OnInit {
+export class UserEditComponent implements OnInit {
 	public title: string;
-	public usuario: Usuario;
+	public user: User;
 	public identity;
 	public token;
 	public status: string;
@@ -20,13 +20,13 @@ export class UsuarioEditComponent implements OnInit {
 
 	constructor(
 		private _router: Router,
-		private _usuarioService: UsuarioService,
+		private _userService: UserService,
 		private _uploadService: UploadService
 	) {
 		this.title = 'Mis datos';
-		this.identity = this._usuarioService.getIdentity();
-		this.token = this._usuarioService.getToken();
-		this.usuario = this.identity;
+		this.identity = this._userService.getIdentity();
+		this.token = this._userService.getToken();
+		this.user = this.identity;
 		this.url = GLOBAL.url + "controller/";
 	}
 
@@ -39,7 +39,7 @@ export class UsuarioEditComponent implements OnInit {
 	}
 
 	onSubmit() {
-		this._usuarioService.updateUsuario(this.usuario).subscribe(
+		this._userService.updateUser(this.user).subscribe(
 			response => {
 
 				if (!response.user) {
@@ -47,13 +47,13 @@ export class UsuarioEditComponent implements OnInit {
 				} else {
 					//this.usuario = response.user;
 					this.status = 'success';
-					localStorage.setItem('identity', JSON.stringify(this.usuario));
+					localStorage.setItem('identity', JSON.stringify(this.user));
 
 					//Subir img
-					this._uploadService.makeFileRequest(this.url + 'upload/' + this.usuario.id, [], this.filesToUpload, this.token, 'file').
+					this._uploadService.makeFileRequest(this.url + 'upload/' + this.user.id, [], this.filesToUpload, this.token, 'file').
 						then((result: any) => {
-							this.usuario.image = result.user.image;
-							localStorage.setItem('identity', JSON.stringify(this.usuario));
+							this.user.image = result.user.image;
+							localStorage.setItem('identity', JSON.stringify(this.user));
 						});
 					this.onActivate();
 				}

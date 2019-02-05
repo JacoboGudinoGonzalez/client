@@ -1,17 +1,17 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../../services/usuario.service';
+import { UserService } from '../../services/user.service';
 import { PublicationService } from '../../services/publication.service';
 import { GLOBAL } from '../../services/global';
 import { Publication } from '../../models/publication';
-import { Usuario } from '../../models/usuario';
+import { User } from '../../models/user';
 import { UploadService } from '../../services/upload.service';
 
 @Component({
   selector: 'sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
-  providers: [UsuarioService, PublicationService, UploadService]
+  providers: [UserService, PublicationService, UploadService]
 })
 export class SidebarComponent implements OnInit {
 
@@ -23,12 +23,12 @@ export class SidebarComponent implements OnInit {
   public urlPublication;
   public status;
   public message: string;
-  public usuario: Usuario;
+  public user: User;
   public publication: Publication;
 
   constructor(
     private _router: Router,
-    private _userService: UsuarioService,
+    private _userService: UserService,
     private _publicationService: PublicationService,
     private _uploadService: UploadService
   ) {
@@ -37,8 +37,8 @@ export class SidebarComponent implements OnInit {
     this.stats = this._userService.getStats();
     this.url = GLOBAL.url + "controller/";
     this.urlPublication = GLOBAL.url + "publicationController/"
-    this.usuario = new Usuario(this.identity == null ? 0 : this.identity.id, '', '', '', '', '', '', 0, '');
-    this.publication = new Publication('', '', '', new Date(), this.usuario);
+    this.user = new User(this.identity == null ? 0 : this.identity.id, '', '', '', '', '', '', 0, '');
+    this.publication = new Publication('', '', '', new Date(), this.user);
   }
 
   ngOnInit() {

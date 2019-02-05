@@ -1,4 +1,4 @@
-import { Usuario } from './usuario';
+import { User } from './user';
 
 export class Publication{
 	constructor(
@@ -6,7 +6,7 @@ export class Publication{
 		public text: string,
 		public file: string,
 		public createdAt: Date,
-		public usuario: Usuario
+		public user: User
 	){
 		
 	}

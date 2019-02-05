@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Usuario } from '../models/usuario';
+import { User } from '../models/user';
 import { GLOBAL } from './global';
 
 
 @Injectable()
-export class UsuarioService{
+export class UserService{
 	public url: string;
 	public identity; 
 	public token;
@@ -16,23 +16,23 @@ export class UsuarioService{
 		this.url = GLOBAL.url+"controller/";
 	}
 
-	register(usuarioToRegister: Usuario):Observable<any>{
-		let params = JSON.stringify(usuarioToRegister);
+	register(userToRegister: User):Observable<any>{
+		let params = JSON.stringify(userToRegister);
 		let headers = new HttpHeaders().set('Content-Type', 'application/json');
 		return this._http.post(this.url+"registerUser", params, {headers: headers});
 	}
 
-	login(usuarioToLogin: any, getToken = null):Observable<any>{
+	login(userToLogin: any, getToken = null):Observable<any>{
 		if(getToken != null){
-			usuarioToLogin.getToken = getToken;
+			userToLogin.getToken = getToken;
 		}
-		let params = JSON.stringify(usuarioToLogin);
+		let params = JSON.stringify(userToLogin);
 		let headers = new HttpHeaders().set('Content-Type', 'application/json');
 		return this._http.post(this.url+"loginUser", params, {headers: headers});
 	}
 
-	updateUsuario(usuarioToUpdate: Usuario):Observable<any>{
-		let params = JSON.stringify(usuarioToUpdate);
+	updateUser(userToUpdate: User):Observable<any>{
+		let params = JSON.stringify(userToUpdate);
 		let headers = new HttpHeaders().set('Content-Type','application/json')
 									   .set('Authorization',this.getToken()); 
 

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GLOBAL } from '../../services/global';
-import { Usuario } from '../../models/usuario';
-import { UsuarioService } from '../../services/usuario.service';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
 
 @Component({
 	selector: 'login',
@@ -11,23 +11,23 @@ import { UsuarioService } from '../../services/usuario.service';
 })
 export class LoginComponent implements OnInit {
 	public title: string;
-	public usuario: Usuario;
+	public user: User;
 	public status: string;
-	public identity: Usuario;
+	public identity: User;
 	public token;
 
 	constructor(
 		private _router: Router,
-		private _usuarioService: UsuarioService
+		private _userService: UserService
 	) {
 		this.title = 'Login';
-		this.usuario = new Usuario('', '', '', '', '', '', '', 0, '');
+		this.user = new User('', '', '', '', '', '', '', 0, '');
 	}
 
 	ngOnInit() { }
 
 	onSubmit() {
-		this._usuarioService.login(this.usuario).subscribe(
+		this._userService.login(this.user).subscribe(
 			response => {
 				this.identity = response.user;
 				if (!this.identity) {
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
 
 					localStorage.setItem('identity', JSON.stringify(this.identity));
 
-					this._usuarioService.login(this.usuario, 'true').subscribe(
+					this._userService.login(this.user, 'true').subscribe(
 						response => {
 							this.token = response.token;
 							if (this.token.length <= 0) {
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
 								localStorage.setItem('token', this.token);
 								this.getCounters();
 							}
-							this.usuario = new Usuario('', '', '', '', '', '', '', 0, '');
+							this.user = new User('', '', '', '', '', '', '', 0, '');
 						},
 						error => {
 							var errorMessage = <any>error;
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
 						}
 					);
 				}
-				this.usuario = new Usuario('', '', '', '', '', '', '', 0, '');
+				this.user = new User('', '', '', '', '', '', '', 0, '');
 			},
 			error => {
 				var errorMessage = <any>error;
@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
 	}
 
 	getCounters() {
-		this._usuarioService.getCounters().subscribe(
+		this._userService.getCounters().subscribe(
 			response => {
 				localStorage.setItem('stats', JSON.stringify(response));
 				this.status = 'success';

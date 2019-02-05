@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UsuarioService } from '../../services/usuario.service';
+import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
 import { GLOBAL } from '../../services/global';
 import { Follow } from '../../models/follow';
-import { Usuario } from '../../models/usuario';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'profile',
   templateUrl: './profile.component.html',
-  providers: [UsuarioService, FollowService]
+  providers: [UserService, FollowService]
 })
 
 export class ProfileComponent implements OnInit {
 
   public title: string;
-  public user: Usuario;
+  public user: User;
   public status: string;
   public url: string;
   public identity;
@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
-    private _userService: UsuarioService,
+    private _userService: UserService,
     private _followService: FollowService
   ) {
     this.title = 'Perfil';
@@ -113,8 +113,8 @@ export class ProfileComponent implements OnInit {
 
   followUser(followed) {
     var follow = new Follow('',
-      new Usuario(this.identity.id, '', '', '', '', '', '', 0, ''),
-      new Usuario(followed, '', '', '', '', '', '', 0, '')
+      new User(this.identity.id, '', '', '', '', '', '', 0, ''),
+      new User(followed, '', '', '', '', '', '', 0, '')
     );
     this._followService.addFollow(this.token, follow).subscribe(
       response => {

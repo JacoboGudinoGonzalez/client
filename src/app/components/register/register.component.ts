@@ -1,25 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Usuario } from '../../models/usuario';
-import { UsuarioService } from '../../services/usuario.service';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
 
 @Component({
 	selector: 'register',
 	templateUrl: './register.component.html'
-	//styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit{
 	public title: string;
-	public usuario: Usuario;
+	public user: User;
 	public status: string; 
 
 	constructor(
-		private _route: ActivatedRoute,
-		private _router: Router,
-		private _usuarioService: UsuarioService
+		private _userService: UserService
 	){
 		this.title = 'Registro';
-		this.usuario = new Usuario('','','','','','','',0,'');
+		this.user = new User('','','','','','','',0,'');
 	}
 
 	ngOnInit(){
@@ -27,7 +23,7 @@ export class RegisterComponent implements OnInit{
 	}
 
 	onSubmit(){
-		this._usuarioService.register(this.usuario).subscribe(
+		this._userService.register(this.user).subscribe(
 			response => {
 
 				if(response.user.id==0){
@@ -36,7 +32,7 @@ export class RegisterComponent implements OnInit{
 				}else{
 					this.status = 'error';
 				}
-				this.usuario = new Usuario('','','','','','','',0,'');
+				this.user = new User('','','','','','','',0,'');
 			},
 			error =>{
 				console.log(<any>error);

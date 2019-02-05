@@ -1,12 +1,12 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
-import { UsuarioService } from './services/usuario.service';
+import { UserService } from './services/user.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers:[UsuarioService]
+  providers:[UserService]
 })
 export class AppComponent implements DoCheck, OnInit {
   public title: string;
@@ -14,7 +14,7 @@ export class AppComponent implements DoCheck, OnInit {
   public url: string;
 
   constructor(
-      private _usuarioService: UsuarioService,
+      private _userService: UserService,
       private _router: Router
     ){
     this.title= 'PET';
@@ -22,11 +22,11 @@ export class AppComponent implements DoCheck, OnInit {
   }
 
   ngOnInit(){
-  	this.identity = this._usuarioService.getIdentity();
+  	this.identity = this._userService.getIdentity();
   }
 
   ngDoCheck(){
-    this.identity = this._usuarioService.getIdentity();
+    this.identity = this._userService.getIdentity();
   }
 
   logout(){

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../../services/usuario.service';
+import { UserService } from '../../services/user.service';
 import { PublicationService } from '../../services/publication.service';
 import { GLOBAL } from '../../services/global';
 import { Publication } from '../../models/publication';
@@ -9,7 +9,7 @@ import { Publication } from '../../models/publication';
 @Component({
   selector: 'timeline',
   templateUrl: './timeline.component.html',
-  providers: [UsuarioService, PublicationService]
+  providers: [UserService, PublicationService]
 
 })
 export class TimelineComponent implements OnInit {
@@ -30,7 +30,7 @@ export class TimelineComponent implements OnInit {
 
   constructor(
     private _router: Router,
-    private _userService: UsuarioService,
+    private _userService: UserService,
     private _publicationService: PublicationService
   ) {
     this.title = 'Timeline';

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as $ from 'jquery';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UsuarioService } from '../../services/usuario.service';
+import { UserService } from '../../services/user.service';
 import { PublicationService } from '../../services/publication.service';
 import { GLOBAL } from '../../services/global';
 import { Publication } from '../../models/publication';
@@ -9,7 +9,7 @@ import { Publication } from '../../models/publication';
 @Component({
   selector: 'publications',
   templateUrl: './publications.component.html',
-  providers: [UsuarioService, PublicationService]
+  providers: [UserService, PublicationService]
 
 })
 export class PublicationsComponent implements OnInit {
@@ -31,7 +31,7 @@ export class PublicationsComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _router: Router,
-    private _userService: UsuarioService,
+    private _userService: UserService,
     private _publicationService: PublicationService
   ) {
     this.title = 'Publications';

@@ -1,10 +1,10 @@
-import { Usuario } from './Usuario';
+import { User } from './user';
 
 export class Follow{
 	constructor(
 		public id: string,
-		public usuario: Usuario,
-		public followed: Usuario
+		public usuario: User,
+		public followed: User
 	){
 		
 	}

@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 
 export var GLOBAL = {
-	url: 'http://localhost:8081/petProject/rest/',
+	url: 'http://localhost:8080/petProject/rest/',
 	
 	unauthorized(errorMessage, token){
 		console.log("errorMessage: "+errorMessage)
