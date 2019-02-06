@@ -1,10 +1,22 @@
 <div class="col-lg-10">
     <h3>{{title}}</h3>
-
-    <form #formAdd="ngForm" (ngSubmit)="onSubmit()">
-        <p>
+    <div class="alert alert-success" *ngIf="status=='success'">
+        Mensaje enviado, miralo en <a [routerLink]="['/mensajes/enviados']">mensajes enviados</a>
+    </div>
+    <div class="alert alert-danger" *ngIf="status=='error'">
+        Mensaje no enviado
+    </div>
+    <form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
+        <p *ngIf="follows">
             <label for="">Para:</label>
-            <select name="" id=""></select>
+            <select name="receiver" #receiver="ngModel" [(ngModel)]="message.receiver" class="form-control" required>
+                <option *ngFor="let follow of follows" value="{{follow.followed.id}}">
+                    {{follow.followed.name}}
+                </option>
+            </select>
+        </p>
+        <p *ngIf="!follows">
+            <label>No sigues a ningun usuario, sigue a alguno <a [routerLink]="['/gente']">aqui</a></label>
         </p>
 
         <p>

@@ -16,20 +16,22 @@ import { TimelineComponent } from './components/timeline/timeline.component';
 import { FollowingComponent } from './components/following/following.component';
 import { FollowedComponent } from './components/followed/followed.component';
 
+import { UserGuard } from './services/user.guard';
+
 const appRoutes: Routes = [
 	{path: 'home', component: HomeComponent},
 	{path: '', redirectTo: 'home', pathMatch: 'full'},
-	{path: 'profile/:id', component: ProfileComponent},
+	{path: 'profile/:id', component: ProfileComponent, canActivate:[UserGuard]},
 	{path: 'login', component: LoginComponent},
 	// {path: 'cliente', component: ClienteComponent},
-	{path: 'siguiendo/:id/:page', component: FollowingComponent},
-	{path: 'siguidores/:id/:page', component: FollowedComponent},
+	{path: 'siguiendo/:id/:page', component: FollowingComponent, canActivate:[UserGuard]},
+	{path: 'siguidores/:id/:page', component: FollowedComponent, canActivate:[UserGuard]},
 	// {path: 'contacto', component: ContactoComponent},
 	{path: 'registro', component: RegisterComponent},
-	{path: 'mis-datos', component: UserEditComponent},
-	{path: 'gente', component: UsersComponent},
-	{path: 'gente/:page', component: UsersComponent},
-	{path: 'timeline', component: TimelineComponent},
+	{path: 'mis-datos', component: UserEditComponent, canActivate:[UserGuard]},
+	{path: 'gente', component: UsersComponent, canActivate:[UserGuard]},
+	{path: 'gente/:page', component: UsersComponent, canActivate:[UserGuard]},
+	{path: 'timeline', component: TimelineComponent, canActivate:[UserGuard]},
 	// {path: 'selecciona-cuidador', component: SelectCuidadorComponent},
 	{path: '**', component: HomeComponent}
 ];

@@ -28,6 +28,9 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { FollowingComponent } from './components/following/following.component';
 import { FollowedComponent } from './components/followed/followed.component';
 
+//Servicios
+import { UserGuard } from './services/user.guard';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +57,7 @@ import { FollowedComponent } from './components/followed/followed.component';
     MessagesModule
   ],
   providers: [
-    appRoutingProviders, UserService, UploadService
+    appRoutingProviders, UserService, UploadService, UserGuard
   ],
   bootstrap: [AppComponent]
 })
