@@ -2,6 +2,7 @@
     <h1 class="h1-strong" *ngIf="user">{{title}} {{user.name}}</h1>
 
     <div class="people" *ngIf="followed">
+        <h2>{{message}}</h2>
         <div *ngFor="let follow of followed" class="item-user">
             <div class="panel panel-default">
                 <div class="panel-body">

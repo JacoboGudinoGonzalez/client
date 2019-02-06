@@ -27,6 +27,7 @@ export class FollowedComponent implements OnInit {
   public followed;
   public url;
   public userPageId;
+  public message:string;
 
   constructor(
     private _route: ActivatedRoute,
@@ -74,8 +75,8 @@ export class FollowedComponent implements OnInit {
   getFollows(user_id, page) {
     this._followService.getFollowed(this.token, user_id, page).subscribe(
       response => {
-        if (!response.item) {
-          this.status = 'error';
+        if(response.msj==0){
+          this.message = 'No estas siguiendo a ningun usuario :(';
         } else {
           console.log(response)
           this.followed = response.item;
