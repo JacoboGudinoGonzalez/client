@@ -4,7 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { StarRatingModule } from 'angular-star-rating';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MomentModule } from 'angular2-moment';;
+import { MomentModule } from 'angular2-moment';
+
+//Modulo Messages
+import { MessagesModule } from './messages/messages.module';
 
 
 import { routing, appRoutingProviders } from './app.routing';
@@ -47,7 +50,8 @@ import { FollowedComponent } from './components/followed/followed.component';
     HttpClientModule,
     StarRatingModule.forRoot(),
     BrowserAnimationsModule,
-    MomentModule
+    MomentModule,
+    MessagesModule
   ],
   providers: [
     appRoutingProviders, UserService, UploadService
