@@ -10,7 +10,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 // import { ContactoComponent } from './components/contacto/contacto.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
-// import { SelectCuidadorComponent } from './components/select-cuidador/select-cuidador.component';
+import { AppointmentsComponent } from './components/appointments/appointments.component';
 import { UsersComponent } from './components/users/users.component';
 import { TimelineComponent } from './components/timeline/timeline.component';
 import { FollowingComponent } from './components/following/following.component';
@@ -26,7 +26,7 @@ const appRoutes: Routes = [
 	// {path: 'cliente', component: ClienteComponent},
 	{path: 'siguiendo/:id/:page', component: FollowingComponent, canActivate:[UserGuard]},
 	{path: 'siguidores/:id/:page', component: FollowedComponent, canActivate:[UserGuard]},
-	// {path: 'contacto', component: ContactoComponent},
+	{path: 'citas', component: AppointmentsComponent},
 	{path: 'registro', component: RegisterComponent},
 	{path: 'mis-datos', component: UserEditComponent, canActivate:[UserGuard]},
 	{path: 'gente', component: UsersComponent, canActivate:[UserGuard]},

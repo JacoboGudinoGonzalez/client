@@ -27,6 +27,7 @@ import { PublicationsComponent } from './components/publications/publications.co
 import { ProfileComponent } from './components/profile/profile.component';
 import { FollowingComponent } from './components/following/following.component';
 import { FollowedComponent } from './components/followed/followed.component';
+import { AppointmentsComponent } from './components/appointments/appointments.component';
 
 //Servicios
 import { UserGuard } from './services/user.guard';
@@ -44,7 +45,8 @@ import { UserGuard } from './services/user.guard';
     PublicationsComponent,
     ProfileComponent,
     FollowingComponent,
-    FollowedComponent
+    FollowedComponent,
+    AppointmentsComponent
   ],
   imports: [
     BrowserModule,
