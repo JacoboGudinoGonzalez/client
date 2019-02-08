@@ -113,8 +113,8 @@ export class ProfileComponent implements OnInit {
 
   followUser(followed) {
     var follow = new Follow('',
-      new User(this.identity.id, '', '', '', '', '', '', 0, ''),
-      new User(followed, '', '', '', '', '', '', 0, '')
+      new User(this.identity.id, '', '', '', '', '', '', 0, '', ''),
+      new User(followed, '', '', '', '', '', '', 0, '', '')
     );
     this._followService.addFollow(this.token, follow).subscribe(
       response => {

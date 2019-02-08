@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
 		private _userService: UserService
 	) {
 		this.title = 'Login';
-		this.user = new User('', '', '', '', '', '', '', 0, '');
+		this.user = new User('', '', '', '', '', '', '', 0, '', '');
 	}
 
 	ngOnInit() { }
@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
 								localStorage.setItem('token', this.token);
 								this.getCounters();
 							}
-							this.user = new User('', '', '', '', '', '', '', 0, '');
+							this.user = new User('', '', '', '', '', '', '', 0, '', '');
 						},
 						error => {
 							var errorMessage = <any>error;
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
 						}
 					);
 				}
-				this.user = new User('', '', '', '', '', '', '', 0, '');
+				this.user = new User('', '', '', '', '', '', '', 0, '', '');
 			},
 			error => {
 				var errorMessage = <any>error;

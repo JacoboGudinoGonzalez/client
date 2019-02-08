@@ -4,37 +4,22 @@
     <div class="people">
         <div *ngFor="let user of users" class="item-user">
             <div class="panel panel-default" *ngIf="user.id!=identity.id">
-                <div class="panel-body">
-                    <h3>{{user.type}}</h3>
-                    <div class="image-user pull-left">
-                        <a href="#">
-                            <img src="{{url+'getImageFile/'+user.image}}" *ngIf="user.image">
-                            <img src="{{url+'getImageFile/'+user.default}}" *ngIf="!user.image">
-                        </a>
-                    </div>
-                    <div class="user-name pull-left">
+                <div class="panel-heading">
+                    <h3>
                         <p class="name-surname">
                             <a [routerLink]="['/profile',user.id]">
                                 {{user.name}}
                             </a>
                         </p>
-                        <p class="nickname">{{user.email}}</p>
-                        <star-rating 
-                            [starType]="'svg'" 
-                            [rating]="user.rating" 
-                            [hoverEnabled]="true" 
-                            (starClickChange)="onClick($event)"
-                            (ratingChange)="onRatingChange($event)" 
-                            (hoverRatingChange)="onHoverRatingChange($event)">
-                        </star-rating>
+                    </h3>
+                    <div class="pull-right">
+                        <button class="btn btn-warning" (click)="followUser(user.id)">
+                            <span class="glyphicon glyphicon glyphicon-calendar"></span>
+                            Crear una cita
+                        </button>
                     </div>
-                    <div class="user-name">
-                        <p class="name-surname">
-                            <a href="#">
-                                {{user.description}}
-                            </a>
-                        </p>
-                    </div>
+                </div>
+                <div class="panel-body">
                     <!--SEGUIR DEGAR DE SEGUIR-->
                     <div class="pull-right">
                         <button class="btn btn-success" *ngIf="follows.indexOf(user.id) < 0" (click)="followUser(user.id)">
@@ -53,6 +38,26 @@
                                 Siguiendo
                             </ng-template>
                         </button>
+                    </div>
+                    <div class="image-user pull-left">
+                        <a href="#">
+                            <img src="{{url+'getImageFile/'+user.image}}" *ngIf="user.image">
+                            <img src="{{url+'getImageFile/'+user.default}}" *ngIf="!user.image">
+                        </a>
+                    </div>
+                    <div class="user-name pull-left">
+                        <p class="nickname">{{user.address}}</p>
+                        <star-rating [starType]="'svg'" [rating]="user.rating" [hoverEnabled]="true" (starClickChange)="onClick($event)"
+                            (ratingChange)="onRatingChange($event)" (hoverRatingChange)="onHoverRatingChange($event)">
+                        </star-rating>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="user-name">
+                        <p class="name-surname">
+                            <a href="#">
+                                {{user.description}}
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>

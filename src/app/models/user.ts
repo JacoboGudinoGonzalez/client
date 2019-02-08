@@ -8,7 +8,8 @@ export class User{
 		public image: string,
 		public type: string,
 		public rating: number,
-		public description: string
+		public description: string,
+		public address: string
 	){
 		
 	}
