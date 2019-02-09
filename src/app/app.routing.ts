@@ -27,6 +27,7 @@ const appRoutes: Routes = [
 	{path: 'siguiendo/:id/:page', component: FollowingComponent, canActivate:[UserGuard]},
 	{path: 'siguidores/:id/:page', component: FollowedComponent, canActivate:[UserGuard]},
 	{path: 'citas', component: AppointmentsComponent},
+	{path: 'citas/:id', component: AppointmentsComponent},
 	{path: 'registro', component: RegisterComponent},
 	{path: 'mis-datos', component: UserEditComponent, canActivate:[UserGuard]},
 	{path: 'gente', component: UsersComponent, canActivate:[UserGuard]},

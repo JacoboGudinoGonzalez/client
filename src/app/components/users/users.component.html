@@ -13,9 +13,9 @@
                         </p>
                     </h3>
                     <div class="pull-right">
-                        <button class="btn btn-warning" (click)="followUser(user.id)">
+                        <button class="btn btn-warning" [routerLink]="['/citas',user.id]">
                             <span class="glyphicon glyphicon glyphicon-calendar"></span>
-                            Crear una cita
+                            Crear una cita con {{user.name}}
                         </button>
                     </div>
                 </div>
@@ -47,9 +47,11 @@
                     </div>
                     <div class="user-name pull-left">
                         <p class="nickname">{{user.address}}</p>
-                        <star-rating [starType]="'svg'" [rating]="user.rating" [hoverEnabled]="true" (starClickChange)="onClick($event)"
-                            (ratingChange)="onRatingChange($event)" (hoverRatingChange)="onHoverRatingChange($event)">
+                        <star-rating [starType]="'svg'" [rating]="user.rating" [disabled]="true">
                         </star-rating>
+                        <!-- <star-rating [starType]="'svg'" [rating]="user.rating" [hoverEnabled]="true" (starClickChange)="onClick($event)"
+                            (ratingChange)="onRatingChange($event)" (hoverRatingChange)="onHoverRatingChange($event)">
+                        </star-rating> -->
                     </div>
                     <div class="clearfix"></div>
                     <div class="user-name">

@@ -1,10 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { AppointmentService } from '../../services/appointment.service';
 import { GLOBAL } from '../../services/global';
 import { Appointment } from '../../models/appointment';
+import { User } from 'src/app/models/user';
+import { Pet } from 'src/app/models/pet';
 
 @Component({
   selector: 'appointments',
@@ -27,7 +29,8 @@ export class AppointmentsComponent implements OnInit {
   public appointment: Appointment
   public appointments: Appointment[];
   public message: string;
-  @Input() user: string;
+  public user: User;
+  public pet: Pet;
 
   constructor(
     private _route: ActivatedRoute,
@@ -35,13 +38,14 @@ export class AppointmentsComponent implements OnInit {
     private _userService: UserService,
     private _appointmentService: AppointmentService
   ) {
-    this.title = 'Appointment';
+    this.title = 'Crear nueva cita con ';
     this.identity = this._userService.getIdentity();
     this.token = this._userService.getToken();
     this.url = GLOBAL.url + "controller/";
-    this.urlApp= GLOBAL.url + "appointmentController/";
+    this.urlApp = GLOBAL.url + "appointmentController/";
     this.page = 1;
-    this.appointment = new Appointment('',0,new Date, new Date,null,null);
+    this.pet = new Pet('',this.identity,0,'',0,0,0);
+    this.appointment = new Appointment('', 0, new Date, new Date, this.identity, this.user, this.pet);
   }
 
   ngOnInit() {
@@ -50,13 +54,44 @@ export class AppointmentsComponent implements OnInit {
     } else {
       this.getAppointments(this.user, this.page);
     }*/
+    this.loadPage();
+  }
+
+  loadPage() {
+    this._route.params.subscribe(params => {
+      let id = params['id'];
+      this.getUser(id);
+    });
+  }
+
+  getUser(id) {
+    this._userService.getUser(id).subscribe(
+      response => {
+        if (response[0].user) {
+          this.user = response[0].user;
+        } else {
+          this.status = 'error';
+        }
+      },
+      error => {
+        var errorMessage = <any>error;
+        if (errorMessage != null) {
+          this.status = 'error';
+          if (GLOBAL.unauthorized(errorMessage, this.token)) {
+            this._router.navigate(['profile/', this.identity.id]);
+          } else {
+            console.log(errorMessage);
+          }
+        }
+      }
+    );
   }
 
   onSubmit(form) {
-    console.log(this.appointment)
-    /*this._appointmentService.addAppointment(this.token, this.appointment).subscribe(
+    this.appointment.toUser=this.user;
+    this._appointmentService.addAppointment(this.token, this.appointment).subscribe(
       response => {
-        if (response.publication) {
+        if (response) {
             form.reset();
             this.status = 'success';
         } else {
@@ -74,7 +109,7 @@ export class AppointmentsComponent implements OnInit {
           }
         }
       }
-    );*/
+    );
   }
 
   getAppointments(page, adding = false) {

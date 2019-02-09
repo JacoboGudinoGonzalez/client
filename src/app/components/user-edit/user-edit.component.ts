@@ -38,7 +38,7 @@ export class UserEditComponent implements OnInit {
         }
 	}
 
-	onSubmit() {
+	onSubmit(form) {
 		this._userService.updateUser(this.user).subscribe(
 			response => {
 
@@ -56,6 +56,7 @@ export class UserEditComponent implements OnInit {
 							localStorage.setItem('identity', JSON.stringify(this.user));
 						});
 					this.onActivate();
+					form.reset();
 				}
 			},
 			error => {

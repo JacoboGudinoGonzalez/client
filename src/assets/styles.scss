@@ -1,4 +1,8 @@
 @import '~css-star-rating/scss/star-rating';
+body{
+    background: rgba(245, 245, 245, 0.5)!important;
+}
+
 .h1-strong{
     font-size: 35px;
     font-weight: bold;
@@ -256,4 +260,11 @@
 
 #data-profile .publications{
     margin-top: 40px;
+}
+
+/*Citas*/
+
+.margin-top{
+    margin-top:25px;
+    float: right;
 }

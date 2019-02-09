@@ -1,4 +1,5 @@
 import { User } from './user';
+import { Pet } from './pet';
 
 export class Appointment{
 	constructor(
@@ -7,7 +8,8 @@ export class Appointment{
 		public fromDate: Date,
 		public toDate: Date,
 		public fromUser: User,
-		public toUser: User
+		public toUser: User,
+		public pet: Pet
 	){
 		
 	}

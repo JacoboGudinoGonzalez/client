@@ -31,6 +31,12 @@
             Mensajes
           </a>
         </li>
+        <li>
+            <a [routerLink]="['/citas']" [routerLinkActive]="['active']">
+              <span class="glyphicon glyphicon-calendar"></span>
+              Citas
+            </a>
+          </li>
       </ul>
       <ul class="nav navbar navbar-nav navbar-right" *ngIf="identity">
         <li class="avatar">

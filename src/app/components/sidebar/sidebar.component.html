@@ -67,7 +67,7 @@
     <p>
       <label>¿Que estas pensando hoy?</label>
       <textarea name="text" #text="ngModel" [(ngModel)]="publication.text" class="form-control" required></textarea>
-      <span *ngIf="!text-valid && text.touched">
+      <span *ngIf="!text.valid && text.touched">
         El texto es obligatorio
       </span>
     </p>
