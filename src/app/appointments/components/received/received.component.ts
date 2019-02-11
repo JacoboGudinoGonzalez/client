@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Message } from '../../../models/message';
-import { MessageService } from '../../../services/message.service';
+import { Appointment } from '../../../models/appointment';
+import { AppointmentService } from '../../../services/appointment.service';
+import { FollowService } from '../../../services/follow.service';
 import { UserService } from '../../../services/user.service';
 import { GLOBAL } from '../../../services/global';
 import { User } from 'src/app/models/user';
@@ -9,12 +10,13 @@ import { User } from 'src/app/models/user';
 @Component({
     selector: 'received',
     templateUrl: 'received.component.html',
-    providers: [MessageService]
+    providers: [AppointmentService, FollowService]
 })
 
 export class ReceivedComponent {
     public title: string;
-    public message: Message;
+    public msj: string;
+    public appointment: Appointment;
     public identity;
     public user: User;
     public token;
@@ -22,7 +24,8 @@ export class ReceivedComponent {
     public urlUser: string;
     public status: string;
     public follows;
-    public messages: Message[];
+    public followsId: Array<number>;
+    public appointments: Appointment[];
     public next_page;
     public prev_page;
     public total;
@@ -33,33 +36,33 @@ export class ReceivedComponent {
     constructor(
         private _route: ActivatedRoute,
         private _router: Router,
-        private _messageService: MessageService,
+        private _appointmenService: AppointmentService,
+        private _followService: FollowService,
         private _userService: UserService
     ) {
-        this.title = 'Mensajes recibidos';
+        this.title = 'Citas enviadas';
         this.token = this._userService.getToken();
         this.identity = this._userService.getIdentity();
-        this.url = GLOBAL.url + 'messageController/';
         this.urlUser = GLOBAL.url + 'controller/';
         this.user = new User(this.identity == null ? 0 : this.identity.id, '', '', '', '', '', '', 0, '', '');
-        this.message = new Message('', '', '', new Date(), this.user, null);
+        this.appointment = new Appointment('', 0, new Date(), new Date(), null, null, null);
     }
 
     ngOnInit() {
         if (GLOBAL.verifyIdentity(this.identity)) {
-          this._router.navigate(['/login']);
+            this._router.navigate(['/login']);
         } else {
-          this.actualPage();
+            this.actualPage();
         }
-      }
+    }
 
-    getMessages(token, page) {
-        this._messageService.getMyMessages(token, page).subscribe(
+    getAppointments(token, page) {
+        this._appointmenService.getMyAppointments(token, page).subscribe(
             response => {
                 if (!response.item) {
                     this.status = 'error';
                 } else {
-                    this.messages = response.item;
+                    this.appointments = response.item;
                     this.total = response.total;
                     this.pages = response.pages;
                 }
@@ -80,7 +83,7 @@ export class ReceivedComponent {
 
     actualPage() {
         this._route.params.subscribe(params => {
-            
+
             let page = +params['page'];
             this.page = page;
             if (!params['page']) {
@@ -94,10 +97,34 @@ export class ReceivedComponent {
                 if (this.prev_page <= 0) {
                     this.prev_page = 1;
                 }
-                this.page=page;
+                this.page = page;
             }
             //devolver listado de mensajes
-            this.getMessages(this.token, this.page);
+            this.getAppointments(this.token, this.page);
+            this.getMyFollows();
         });
+    }
+
+    getMyFollows() {
+        this._followService.getMyFollows(this.token).subscribe(
+            response => {
+                if (response.msj == '0') {
+                    this.msj = 'No sigues a ningun usuario :C';
+                } else {
+                    this.follows = response.map(f => f.followed.id);
+                }
+            },
+            error => {
+                var errorMessage = <any>error;
+                if (errorMessage != null) {
+                    this.status = 'error';
+                    if (GLOBAL.unauthorized(errorMessage, this.token)) {
+                        this._router.navigate(['/login']);
+                    } else {
+                        console.log(errorMessage);
+                    }
+                }
+            }
+        );
     }
 }

@@ -59,8 +59,8 @@ export class SendedComponent {
     getAppointments(token, page) {
         this._appointmenService.getEmmitAppointments(token, page).subscribe(
             response => {
-                if (!response.item) {
-                    this.status = 'error';
+                if (response.msj=='0') {
+                    this.msj = 'Sin citas';
                 } else {
                     this.appointments = response.item;
                     this.total = response.total;
@@ -113,10 +113,8 @@ export class SendedComponent {
                 } else {
                     this.follows = response.map(f => f.followed.id);
                 }
-                console.log(this.follows);
             },
             error => {
-                console.log(error);
                 var errorMessage = <any>error;
                 if (errorMessage != null) {
                     this.status = 'error';
