@@ -8,7 +8,7 @@
     </div>
     <form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
         <p *ngIf="follows">
-            <label for="">Para:</label>
+            <label for="">Para: </label>
             <select name="receiver" #receiver="ngModel" [(ngModel)]="message.receiver" class="form-control" required>
                 <option *ngFor="let follow of follows" value="{{follow.followed.id}}">
                     {{follow.followed.name}}

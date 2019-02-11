@@ -20,13 +20,13 @@ export class AppointmentService{
         return this._http.post(this.url+'addAppointment', params, {headers:headers})
     }
 
-    getMyAppointments(token, page=1):Observable<any>{
+    getEmmitAppointments(token, page=1):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('Authorization', token);
         return this._http.get(this.url+'myAppointments/'+page, {headers:headers})
     }
 
-    getEmmitAppointments(token, page=1):Observable<any>{
+    getMyAppointments(token, page=1):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json')
                                        .set('Authorization', token);
         return this._http.get(this.url+'appointments/'+page, {headers:headers})

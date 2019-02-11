@@ -6,8 +6,9 @@ import { StarRatingModule } from 'angular-star-rating';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MomentModule } from 'angular2-moment';
 
-//Modulo Messages
+//Modulos
 import { MessagesModule } from './messages/messages.module';
+import { AppointmentsModule } from './appointments/appointments.module';
 
 
 import { routing, appRoutingProviders } from './app.routing';
@@ -27,7 +28,6 @@ import { PublicationsComponent } from './components/publications/publications.co
 import { ProfileComponent } from './components/profile/profile.component';
 import { FollowingComponent } from './components/following/following.component';
 import { FollowedComponent } from './components/followed/followed.component';
-import { AppointmentsComponent } from './components/appointments/appointments.component';
 
 //Servicios
 import { UserGuard } from './services/user.guard';
@@ -45,8 +45,7 @@ import { UserGuard } from './services/user.guard';
     PublicationsComponent,
     ProfileComponent,
     FollowingComponent,
-    FollowedComponent,
-    AppointmentsComponent
+    FollowedComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +55,8 @@ import { UserGuard } from './services/user.guard';
     StarRatingModule.forRoot(),
     BrowserAnimationsModule,
     MomentModule,
-    MessagesModule
+    MessagesModule,
+    AppointmentsModule
   ],
   providers: [
     appRoutingProviders, UserService, UploadService, UserGuard

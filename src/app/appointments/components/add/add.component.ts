@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../../services/user.service';
-import { AppointmentService } from '../../services/appointment.service';
-import { GLOBAL } from '../../services/global';
-import { Appointment } from '../../models/appointment';
+import { UserService } from '../../../services/user.service';
+import { AppointmentService } from '../../../services/appointment.service';
+import { GLOBAL } from '../../../services/global';
+import { Appointment } from '../../../models/appointment';
 import { User } from 'src/app/models/user';
 import { Pet } from 'src/app/models/pet';
 
 @Component({
-  selector: 'appointments',
-  templateUrl: './appointments.component.html',
+  selector: 'add',
+  templateUrl: './add.component.html',
   providers: [UserService, AppointmentService]
 
 })
-export class AppointmentsComponent implements OnInit {
+export class AddComponent implements OnInit {
 
   public title: string;
   public identity;

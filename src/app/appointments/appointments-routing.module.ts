@@ -9,29 +9,28 @@ import { SendedComponent } from './components/sended/sended.component';
 
 import { UserGuard } from '../services/user.guard';
 
-const messagesRoutes: Routes = [
+const appointmentsRoutes: Routes = [
     {
-        path: 'mensajes', 
+        path: 'citas', 
         component: MainComponent,
         children: [
-            { path: '', redirectTo:'enviar', pathMatch:'full'},
-            { path: 'enviar', component: AddComponent, canActivate:[UserGuard]},
+            { path: '', redirectTo:'recibidas', pathMatch:'full'},
+            { path: 'recibidas', component: ReceivedComponent, canActivate:[UserGuard]},
+            { path: 'recibidas/:page', component: ReceivedComponent, canActivate:[UserGuard]},
+            { path: 'enviadas', component: SendedComponent, canActivate:[UserGuard]},
+            { path: 'enviadas/:page', component: SendedComponent, canActivate:[UserGuard]},
             { path: 'enviar/:id', component: AddComponent, canActivate:[UserGuard]},
-            { path: 'recibidos', component: ReceivedComponent, canActivate:[UserGuard]},
-            { path: 'recibidos/:page', component: ReceivedComponent, canActivate:[UserGuard]},
-            { path: 'enviados', component: SendedComponent, canActivate:[UserGuard]},
-            { path: 'enviados/:page', component: SendedComponent, canActivate:[UserGuard]},
         ]
     }
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(messagesRoutes)
+        RouterModule.forChild(appointmentsRoutes)
     ],
     exports: [
         RouterModule
     ]
 })
 
-export class MessagesRoutingModule {}
+export class AppointmentsRoutingModule {}
