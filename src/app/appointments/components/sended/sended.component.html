@@ -11,6 +11,9 @@
                             <img src="{{urlUser+'getImageFile/'+appointment.toUser.default}}" *ngIf="!appointment.toUser.image">
                         </a>
                     </div>
+                    <span class="label label-default pull-right" *ngIf="appointment.status==1">ENVIADA</span>
+                    <span class="label label-default pull-right" *ngIf="appointment.status==2">ACEPTADA</span>
+                    <span class="label label-default pull-right" *ngIf="appointment.status==3">RECHAZADA</span>
                     <div class="user-name pull-left">
                         <p class="name-surname">
                             <span class="span-gray">Cita con: </span>
@@ -54,7 +57,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

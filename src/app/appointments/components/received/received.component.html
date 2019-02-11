@@ -1,67 +1,48 @@
 <div class="col-lg-10">
-        <h3>{{title}}</h3>
-    
-        <div class="people" *ngIf="appointments">
-            <div *ngFor="let appointment of appointments" class="item-user">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="image-user pull-left">
-                            <a href="#">
-                                <img src="{{urlUser+'getImageFile/'+appointment.fromUser.image}}" *ngIf="appointment.fromUser.image">
-                                <img src="{{urlUser+'getImageFile/'+appointment.fromUser.default}}" *ngIf="!appointment.fromUser.image">
+    <h3>{{title}}</h3>
+
+    <div class="people" *ngIf="appointments">
+        <div *ngFor="let appointment of appointments" class="item-user">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="image-user pull-left">
+                        <a href="#">
+                            <img src="{{urlUser+'getImageFile/'+appointment.fromUser.image}}" *ngIf="appointment.fromUser.image">
+                            <img src="{{urlUser+'getImageFile/'+appointment.fromUser.default}}" *ngIf="!appointment.fromUser.image">
+                        </a>
+                    </div>
+                    <div class="user-name pull-left">
+                        <p class="name-surname">
+                            <span class="span-gray">Cita con: </span>
+                            <a [routerLink]="['/profile',appointment.fromUser.id]">
+                                {{appointment.fromUser.name}}
                             </a>
-                        </div>
-                        <div class="user-name pull-left">
-                            <p class="name-surname">
-                                <span class="span-gray">Cita con: </span>
-                                <a [routerLink]="['/profile',appointment.fromUser.id]">
-                                    {{appointment.fromUser.name}}
-                                </a>
-                                |
-                                <span class="span-gray">Del: </span>
-                                <span> {{ appointment.fromDate }} </span>
-                                <span class="span-gray"> Hasta: </span>
-                                <span> {{ appointment.toDate }}</span>
-                            </p>
-                        </div>
-                        <div class="pull-right">
-                            <button class="btn btn-success" [routerLink]="['/mensajes/enviar',appointment.fromUser.id]" *ngIf="follows.indexOf(appointment.fromUser.id) >= 0">
-                                <span class="glyphicon glyphicon glyphicon-calendar"></span>
-                                Enviar mensaje a {{appointment.fromUser.name}}
-                            </button>
-                            &nbsp;
-                            <!-- Button HTML (to Trigger Modal) -->
-                            <a href="#myModal{{appointment.id}}" role="button" class="btn btn-large btn-danger" data-toggle="modal">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </a>
-    
-                            <!-- Modal HTML -->
-                            <div id="myModal{{appointment.id}}" class="modal fade">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title">¿Seguro que deseas cancelar la cita?</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>La cita quedara definitivamente cancelada</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deleteAppointment(appointment.id)">Cancelar
-                                                cita</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-    
-                        </div>
+                            |
+                            <span class="span-gray">Del: </span>
+                            <span> {{ appointment.fromDate }} </span>
+                            <span class="span-gray"> Hasta: </span>
+                            <span> {{ appointment.toDate }}</span>
+                        </p>
+                    </div>
+                    <div class="pull-right">
+                        <button class="btn btn-success" [routerLink]="['/mensajes/enviar',appointment.fromUser.id]"
+                            *ngIf="follows.indexOf(appointment.fromUser.id) >= 0">
+                            <span class="glyphicon glyphicon glyphicon-calendar"></span>
+                            Enviar mensaje a {{appointment.fromUser.name}}
+                        </button>
+                        &nbsp;
+
+                        <label class="checkbox-inline">
+                            <input type="checkbox" checked data-toggle="toggle"> First
+                        </label>
+
                     </div>
                 </div>
             </div>
-            <ul class="pagination pull-right">
-                <li *ngIf="page > 1"><a [routerLink]="['/citas/enviadas', prev_page]">Anterior</a></li>
-                <li *ngIf="pages != page"><a [routerLink]="['/citas/enviadas', next_page]">Siguiente</a></li>
-            </ul>
         </div>
+        <ul class="pagination pull-right">
+            <li *ngIf="page > 1"><a [routerLink]="['/citas/enviadas', prev_page]">Anterior</a></li>
+            <li *ngIf="pages != page"><a [routerLink]="['/citas/enviadas', next_page]">Siguiente</a></li>
+        </ul>
     </div>
+</div>
