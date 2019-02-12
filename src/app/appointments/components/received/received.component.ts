@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { UiSwitchModule } from 'ngx-ui-switch';
 import { Appointment } from '../../../models/appointment';
 import { AppointmentService } from '../../../services/appointment.service';
 import { FollowService } from '../../../services/follow.service';
@@ -10,7 +11,7 @@ import { User } from 'src/app/models/user';
 @Component({
     selector: 'received',
     templateUrl: 'received.component.html',
-    providers: [AppointmentService, FollowService]
+    providers: [AppointmentService, FollowService, UiSwitchModule]
 })
 
 export class ReceivedComponent {
