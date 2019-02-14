@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { StarRatingModule } from 'angular-star-rating';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MomentModule } from 'angular2-moment';
-import { UiSwitchModule } from 'ngx-ui-switch';
 
 //Modulos
 import { MessagesModule } from './messages/messages.module';
@@ -57,8 +56,7 @@ import { UserGuard } from './services/user.guard';
     BrowserAnimationsModule,
     MomentModule,
     MessagesModule,
-    AppointmentsModule,
-    UiSwitchModule
+    AppointmentsModule
   ],
   providers: [
     appRoutingProviders, UserService, UploadService, UserGuard

@@ -7,8 +7,10 @@
                 <div class="panel-body">
                     <div class="image-user pull-left">
                         <a href="#">
-                            <img src="{{urlUser+'getImageFile/'+appointment.fromUser.image}}" *ngIf="appointment.fromUser.image">
-                            <img src="{{urlUser+'getImageFile/'+appointment.fromUser.default}}" *ngIf="!appointment.fromUser.image">
+                            <img src="{{urlUser+'getImageFile/'+appointment.fromUser.image}}"
+                                *ngIf="appointment.fromUser.image">
+                            <img src="{{urlUser+'getImageFile/'+appointment.fromUser.default}}"
+                                *ngIf="!appointment.fromUser.image">
                         </a>
                     </div>
                     <div class="user-name pull-left">
@@ -23,16 +25,19 @@
                             <span class="span-gray"> Hasta: </span>
                             <span> {{ appointment.toDate }}</span>
                         </p>
-                    </div>
-                    <div class="pull-right">
                         <button class="btn btn-success" [routerLink]="['/mensajes/enviar',appointment.fromUser.id]"
                             *ngIf="follows.indexOf(appointment.fromUser.id) >= 0">
                             <span class="glyphicon glyphicon glyphicon-calendar"></span>
                             Enviar mensaje a {{appointment.fromUser.name}}
                         </button>
                         &nbsp;
-
-                        <ui-switch></ui-switch>
+                    </div>
+                    <div class="pull-right">
+                        <span class="label label-default">Status {{appointment.status}}</span>
+                        <label class="switch switch_type1" role="switch">
+                            <input type="checkbox" class="switch__toggle" [(ngModel)]="appointment.status" (change)="changeAppointmentStatus(appointment.status?'2':'3',appointment.id)">
+                            <span class="switch__label"></span>
+                        </label>
 
                     </div>
                 </div>

@@ -9,7 +9,8 @@ export class Appointment{
 		public toDate: Date,
 		public fromUser: User,
 		public toUser: User,
-		public pet: Pet
+		public pet: Pet,
+		public status: string
 	){
 		
 	}

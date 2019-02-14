@@ -39,8 +39,8 @@ export class AppointmentService{
     }
 
     changeAppointmentStatus(token, id, status):Observable<any>{
-        let headers = new HttpHeaders().set('Content-Type', 'application/json')
-                                       .set('Authorization', token);
+        let headers = new HttpHeaders().set('Content-Type','application/json')
+                                       .set('Authorization',token); 
         return this._http.put(this.url+'appointment/'+id+'/'+status, {headers:headers})
     }
 }

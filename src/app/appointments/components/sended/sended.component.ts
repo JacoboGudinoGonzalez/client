@@ -45,7 +45,7 @@ export class SendedComponent {
         this.identity = this._userService.getIdentity();
         this.urlUser = GLOBAL.url + 'controller/';
         this.user = new User(this.identity == null ? 0 : this.identity.id, '', '', '', '', '', '', 0, '', '');
-        this.appointment = new Appointment('', 0, new Date(), new Date(), null, null, null);
+        this.appointment = new Appointment('', 0, new Date(), new Date(), null, null, null, '');
     }
 
     ngOnInit() {
@@ -59,7 +59,7 @@ export class SendedComponent {
     getAppointments(token, page) {
         this._appointmenService.getEmmitAppointments(token, page).subscribe(
             response => {
-                if (response.msj=='0') {
+                if (response.msj == '0') {
                     this.msj = 'Sin citas';
                 } else {
                     this.appointments = response.item;
@@ -113,6 +113,25 @@ export class SendedComponent {
                 } else {
                     this.follows = response.map(f => f.followed.id);
                 }
+            },
+            error => {
+                var errorMessage = <any>error;
+                if (errorMessage != null) {
+                    this.status = 'error';
+                    if (GLOBAL.unauthorized(errorMessage, this.token)) {
+                        this._router.navigate(['/login']);
+                    } else {
+                        console.log(errorMessage);
+                    }
+                }
+            }
+        );
+    }
+
+    deleteAppointment(id) {
+        this._appointmenService.deleteAppointment(this.token, id).subscribe(
+            response => {
+                console.log(response);
             },
             error => {
                 var errorMessage = <any>error;

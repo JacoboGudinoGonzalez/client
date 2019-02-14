@@ -45,7 +45,7 @@ export class AddComponent implements OnInit {
     this.urlApp = GLOBAL.url + "appointmentController/";
     this.page = 1;
     this.pet = new Pet('',this.identity,0,'',0,0,0);
-    this.appointment = new Appointment('', 0, new Date, new Date, this.identity, this.user, this.pet);
+    this.appointment = new Appointment('', 0, new Date, new Date, this.identity, this.user, this.pet, '');
   }
 
   ngOnInit() {

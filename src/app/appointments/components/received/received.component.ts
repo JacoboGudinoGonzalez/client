@@ -46,7 +46,7 @@ export class ReceivedComponent {
         this.identity = this._userService.getIdentity();
         this.urlUser = GLOBAL.url + 'controller/';
         this.user = new User(this.identity == null ? 0 : this.identity.id, '', '', '', '', '', '', 0, '', '');
-        this.appointment = new Appointment('', 0, new Date(), new Date(), null, null, null);
+        this.appointment = new Appointment('', 0, new Date(), new Date(), null, null, null, '');
     }
 
     ngOnInit() {
@@ -114,6 +114,26 @@ export class ReceivedComponent {
                 } else {
                     this.follows = response.map(f => f.followed.id);
                 }
+            },
+            error => {
+                var errorMessage = <any>error;
+                if (errorMessage != null) {
+                    this.status = 'error';
+                    if (GLOBAL.unauthorized(errorMessage, this.token)) {
+                        this._router.navigate(['/login']);
+                    } else {
+                        console.log(errorMessage);
+                    }
+                }
+            }
+        );
+    }
+
+    changeAppointmentStatus(event: any, id) {
+        console.log(event);
+        this._appointmenService.changeAppointmentStatus(this.token, id, event).subscribe(
+            response => {
+                this.actualPage();
             },
             error => {
                 var errorMessage = <any>error;
