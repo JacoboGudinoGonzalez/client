@@ -130,8 +130,8 @@ export class ReceivedComponent {
     }
 
     changeAppointmentStatus(event: any, id) {
-        console.log(event);
-        this._appointmenService.changeAppointmentStatus(this.token, id, event).subscribe(
+        var status = (event==2?3:2);
+        this._appointmenService.changeAppointmentStatus(this.token, id, status).subscribe(
             response => {
                 this.actualPage();
             },

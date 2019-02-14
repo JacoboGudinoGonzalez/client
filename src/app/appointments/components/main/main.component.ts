@@ -13,6 +13,5 @@ export class MainComponent{
     }
 
     ngOnInit(){
-        console.log("componente main cargado");
     }
 }

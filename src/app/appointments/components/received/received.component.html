@@ -33,12 +33,15 @@
                         &nbsp;
                     </div>
                     <div class="pull-right">
-                        <span class="label label-default">Status {{appointment.status}}</span>
+                        <p>
+                            <span class="label label-default">Status {{appointment.status}}</span>
+                        </p>
                         <label class="switch switch_type1" role="switch">
-                            <input type="checkbox" class="switch__toggle" [(ngModel)]="appointment.status" (change)="changeAppointmentStatus(appointment.status?'2':'3',appointment.id)">
+                            <input type="checkbox" class="switch__toggle"
+                            (change)="changeAppointmentStatus(appointment.status, appointment.id)"
+                            [checked]="appointment.status==2?true:false">
                             <span class="switch__label"></span>
                         </label>
-
                     </div>
                 </div>
             </div>
