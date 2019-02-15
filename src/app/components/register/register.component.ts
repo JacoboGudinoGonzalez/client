@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit{
 		this._userService.register(this.user).subscribe(
 			response => {
 
-				if(response.user.id==0){
+				if(response.user){
 					console.log(response.user.name);
 					this.status = 'success';
 				}else{
