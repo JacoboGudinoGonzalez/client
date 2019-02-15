@@ -34,12 +34,22 @@
                     </div>
                     <div class="pull-right">
                         <p>
-                            <span class="label label-default">Status {{appointment.status}}</span>
+                            <span *ngIf="appointment.status==1" class="label label-default">Sin responder</span>
+                            <span *ngIf="appointment.status==2" class="label label-success">Aceptada</span>
+                            <span *ngIf="appointment.status==3" class="label label-danger">Rechazada</span>
                         </p>
-                        <label class="switch switch_type1" role="switch">
+                        <label *ngIf="appointment.status==1" class="switch switch_default"
+                            role="switch">
                             <input type="checkbox" class="switch__toggle"
-                            (change)="changeAppointmentStatus(appointment.status, appointment.id)"
-                            [checked]="appointment.status==2?true:false">
+                                (change)="changeAppointmentStatus(2, appointment.id)"
+                                [checked]="false">
+                            <span class="switch__label"></span>
+                        </label>
+                        <label *ngIf="appointment.status==2 || appointment.status==3" class="switch switch_type1"
+                            role="switch">
+                            <input type="checkbox" class="switch__toggle"
+                                (change)="changeAppointmentStatus(appointment.status, appointment.id)"
+                                [checked]="appointment.status==2?true:false">
                             <span class="switch__label"></span>
                         </label>
                     </div>
