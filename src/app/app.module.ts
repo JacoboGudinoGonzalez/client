@@ -6,6 +6,8 @@ import { StarRatingModule } from 'angular-star-rating';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MomentModule } from 'angular2-moment';
 
+import { AgmCoreModule } from '@agm/core';
+
 //Modulos
 import { MessagesModule } from './messages/messages.module';
 import { AppointmentsModule } from './appointments/appointments.module';
@@ -56,7 +58,11 @@ import { UserGuard } from './services/user.guard';
     BrowserAnimationsModule,
     MomentModule,
     MessagesModule,
-    AppointmentsModule
+    AppointmentsModule,
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyCu4wKOQL_4AJCdVYbBGzEQBljGpGDK40w",
+      libraries: ["places"]
+    }),
   ],
   providers: [
     appRoutingProviders, UserService, UploadService, UserGuard

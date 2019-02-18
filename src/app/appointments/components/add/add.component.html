@@ -36,7 +36,7 @@
                 Cita enviada correctamente
               </div>
               <div class="alert alert-danger" *ngIf="status=='error'">
-                Cita no enviada
+                Cita no enviada {{message}}
               </div>
       
               <form #newAppForm="ngForm" (ngSubmit)="onSubmit(newAppForm)" class="col-lg-10">

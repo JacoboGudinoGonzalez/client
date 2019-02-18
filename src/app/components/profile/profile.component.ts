@@ -14,6 +14,8 @@ import { User } from '../../models/user';
 
 export class ProfileComponent implements OnInit {
 
+  lat: number = 51.678418;
+  lng: number = 7.809007;
   public title: string;
   public user: User;
   public status: string;
@@ -57,7 +59,6 @@ export class ProfileComponent implements OnInit {
   getUser(id) {
     this._userService.getUser(id).subscribe(
       response => {
-        console.log(response);
         if (response[0].user) {
           this.user = response[0].user;
           if (response[1].following) {
@@ -113,8 +114,8 @@ export class ProfileComponent implements OnInit {
 
   followUser(followed) {
     var follow = new Follow('',
-      new User(this.identity.id, '', '', '', '', '', '', 0, '', ''),
-      new User(followed, '', '', '', '', '', '', 0, '', '')
+      new User(this.identity.id, '', '', '', '', '', '', 0, '', '', ''),
+      new User(followed, '', '', '', '', '', '', 0, '', '', '')
     );
     this._followService.addFollow(this.token, follow).subscribe(
       response => {

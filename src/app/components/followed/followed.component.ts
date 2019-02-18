@@ -138,8 +138,8 @@ export class FollowedComponent implements OnInit {
 
   followUser(followedId) {
     var follow = new Follow('',
-      new User(this.identity.id, '', '', '', '', '', '', 0, '', ''),
-      new User(followedId, '', '', '', '', '', '', 0, '', '')
+      new User(this.identity.id, '', '', '', '', '', '', 0, '', '', ''),
+      new User(followedId, '', '', '', '', '', '', 0, '', '', '')
     );
 
     this._followService.addFollow(this.token, follow).subscribe(

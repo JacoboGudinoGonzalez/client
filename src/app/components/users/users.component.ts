@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+/// <reference types="@types/googlemaps" />
+import { Component, OnInit, ElementRef, NgZone, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
     ClickEvent,
     HoverRatingChangeEvent,
     RatingChangeEvent
-  } from 'angular-star-rating';
+} from 'angular-star-rating';
 import { User } from '../../models/user';
 import { Follow } from '../../models/follow';
 import { UserService } from '../../services/user.service';
@@ -33,6 +34,7 @@ export class UsersComponent implements OnInit {
     public status: string;
     public follows
     public url;
+    public zoom: number;
 
     constructor(
         private _route: ActivatedRoute,
@@ -41,6 +43,7 @@ export class UsersComponent implements OnInit {
         private _followService: FollowService
     ) {
         this.title = 'Usuarios';
+        this.zoom = 16;
         this.identity = this._userService.getIdentity();
         this.token = this._userService.getToken();
         this.url = GLOBAL.url + "controller/";
@@ -115,8 +118,8 @@ export class UsersComponent implements OnInit {
 
     followUser(followedId) {
         var follow = new Follow('',
-            new User(this.identity.id, '', '', '', '', '', '', 0, '', ''),
-            new User(followedId, '', '', '', '', '', '', 0, '', '')
+            new User(this.identity.id, '', '', '', '', '', '', 0, '', '', ''),
+            new User(followedId, '', '', '', '', '', '', 0, '', '', '')
         );
 
         this._followService.addFollow(this.token, follow).subscribe(
@@ -183,4 +186,9 @@ export class UsersComponent implements OnInit {
         console.log('onHoverRatingChange $event: ', $event);
         this.onHoverRatingChangeResult = $event;
     };
+
+    splitAddress(stringToSplit, pos) {
+        let x = stringToSplit.split(" ");
+        return parseFloat(x[pos].replace(",", ""));
+    }
 }

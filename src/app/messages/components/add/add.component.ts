@@ -35,7 +35,7 @@ export class AddComponent {
         this.token = this._userService.getToken();
         this.identity = this._userService.getIdentity();
         this.url = GLOBAL.url + 'messageController/';
-        this.user = new User(this.identity == null ? 0 : this.identity.id, '', '', '', '', '', '', 0, '', '');
+        this.user = new User(this.identity == null ? 0 : this.identity.id, '', '', '', '', '', '', 0, '', '', '');
         this.message = new Message('', '', '', new Date(), this.user, null);
     }
 
@@ -53,7 +53,7 @@ export class AddComponent {
     }
 
     onSubmit(form) {
-        this.message.receiver = new User(String(this.message.receiver), '', '', '', '', '', '', 0, '', '');
+        this.message.receiver = new User(String(this.message.receiver), '', '', '', '', '', '', 0, '', '', '');
         this._messageService.addMessage(this.token, this.message).subscribe(
             response => {
                 if(response.message){

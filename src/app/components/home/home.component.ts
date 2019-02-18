@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+/// <reference types="@types/googlemaps" />
+import { Component, OnInit, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MapsAPILoader } from '@agm/core';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
@@ -12,29 +15,40 @@ import { GLOBAL } from '../../services/global';
 })
 
 export class HomeComponent implements OnInit {
+
+	public latitude: number;
+	public longitude: number;
+	public searchControl: FormControl;
+	public zoom: number;
+
+	@ViewChild("search")
+	public searchElementRef: ElementRef;
+
 	public title: string;
 	public user: User;
 	public identity;
 	public token;
 	public userArray;
-	public status:string;
+	public status: string;
 
 	constructor(
 		private _userService: UserService,
-		private _router: Router
+		private _router: Router,
+		private mapsAPILoader: MapsAPILoader,
+		private ngZone: NgZone
 	) {
-		this.title = 'HOME';
+		this.title = 'Bienvenido!';
 		this.identity = this._userService.getIdentity();
 		this.token = this._userService.getToken();
 		this.user = this.identity;
 	}
 
 	ngOnInit() {
-		if(GLOBAL.verifyIdentity(this.identity)){
-            this._router.navigate(['/login']);
-        }else{
-            
-        }
+		if (GLOBAL.verifyIdentity(this.identity)) {
+			this._router.navigate(['/login']);
+		} else {
+			this.initMaps();
+		}
 	}
 
 	getUsers() {
@@ -46,9 +60,9 @@ export class HomeComponent implements OnInit {
 				var errorMessage = <any>error;
 				if (errorMessage != null) {
 					this.status = 'error';
-					if (GLOBAL.unauthorized(errorMessage, this.token)){
+					if (GLOBAL.unauthorized(errorMessage, this.token)) {
 						this._router.navigate(['/login']);
-					}else{
+					} else {
 						console.log(errorMessage);
 					}
 				}
@@ -84,6 +98,52 @@ export class HomeComponent implements OnInit {
 			}
 		}
 		return list;
+	}
+
+	private setCurrentPosition() {
+		if ("geolocation" in navigator) {
+			navigator.geolocation.getCurrentPosition((position) => {
+				this.latitude = position.coords.latitude;
+				this.longitude = position.coords.longitude;
+				this.zoom = 12;
+			});
+		}
+	}
+
+	private initMaps() {
+		//set google maps defaults
+		this.zoom = 4;
+		this.latitude = 39.8282;
+		this.longitude = -98.5795;
+
+		//create search FormControl
+		this.searchControl = new FormControl();
+
+		//set current position
+		this.setCurrentPosition();
+
+		//load Places Autocomplete
+		this.mapsAPILoader.load().then(() => {
+			let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+				types: ["address"]
+			});
+			autocomplete.addListener("place_changed", () => {
+				this.ngZone.run(() => {
+					//get the place result
+					let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+					//verify result
+					if (place.geometry === undefined || place.geometry === null) {
+						return;
+					}
+
+					//set latitude, longitude and zoom
+					this.latitude = place.geometry.location.lat();
+					this.longitude = place.geometry.location.lng();
+					this.zoom = 12;
+				});
+			});
+		});
 	}
 
 }

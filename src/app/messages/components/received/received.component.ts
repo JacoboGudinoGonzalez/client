@@ -41,7 +41,7 @@ export class ReceivedComponent {
         this.identity = this._userService.getIdentity();
         this.url = GLOBAL.url + 'messageController/';
         this.urlUser = GLOBAL.url + 'controller/';
-        this.user = new User(this.identity == null ? 0 : this.identity.id, '', '', '', '', '', '', 0, '', '');
+        this.user = new User(this.identity == null ? 0 : this.identity.id, '', '', '', '', '', '', 0, '', '', '');
         this.message = new Message('', '', '', new Date(), this.user, null);
     }
 

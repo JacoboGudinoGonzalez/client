@@ -64,6 +64,10 @@ body{
     min-height: 500px;
 }
 
+.people agm-map{
+    width: 400px;
+}
+
 .item-user .image-user,
 .item-publication .image-user{
     width: 75px;
@@ -83,8 +87,14 @@ body{
     margin-top: 10px;
 }
 
-.item-user .nickname{
-    color: #969996
+.item-user .nickname, .item-user  .map{
+    color: #969996;
+    width: 45%;
+    text-align: justify;
+}
+
+.map{
+    margin-top: -120PX;
 }
 
 .item-user .user-name .name-surname a{
@@ -249,7 +259,8 @@ body{
     border-left: 4px solid #ccc;
     margin-left: 20px;
     padding-left: 20px;
-    height: 180px;
+    height: 100px;
+    width: 300px;
 }
 
 #data-profile .stats a{
@@ -260,6 +271,12 @@ body{
 
 #data-profile .publications{
     margin-top: 40px;
+}
+
+/*MAP*/
+agm-map {
+    height: 300px;
+    width: 530px;
 }
 
 /*Citas*/

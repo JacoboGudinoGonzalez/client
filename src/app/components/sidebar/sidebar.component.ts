@@ -38,7 +38,7 @@ export class SidebarComponent implements OnInit {
     this.stats = this._userService.getStats();
     this.url = GLOBAL.url + "controller/";
     this.urlPublication = GLOBAL.url + "publicationController/"
-    this.user = new User(this.identity == null ? 0 : this.identity.id, '', '', '', '', '', '', 0, '', '');
+    this.user = new User(this.identity == null ? 0 : this.identity.id, '', '', '', '', '', '', 0, '', '', '');
     this.publication = new Publication('', '', '', new Date(), this.user);
   }
 

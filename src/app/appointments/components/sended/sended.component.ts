@@ -44,7 +44,7 @@ export class SendedComponent {
         this.token = this._userService.getToken();
         this.identity = this._userService.getIdentity();
         this.urlUser = GLOBAL.url + 'controller/';
-        this.user = new User(this.identity == null ? 0 : this.identity.id, '', '', '', '', '', '', 0, '', '');
+        this.user = new User(this.identity == null ? 0 : this.identity.id, '', '', '', '', '', '', 0, '', '', '');
         this.appointment = new Appointment('', 0, new Date(), new Date(), null, null, null, '');
     }
 

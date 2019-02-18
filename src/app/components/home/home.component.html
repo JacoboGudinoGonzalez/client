@@ -20,7 +20,30 @@
 
 <div class="col-lg-8 col-lg-offset-2">
 	<div class="jumbotron">
-		<h1>{{title}}</h1>
-	</div>
 
+		<div class="container">
+			<h1>{{title}}</h1>
+			<div class="form-group">
+				<input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off"
+					type="text" class="form-control" #search>
+			</div>
+			<agm-map [latitude]="latitude" class="pull-left">
+				<agm-marker [latitude]="19.5180056" [longitude]="-99.08916579999999"></agm-marker>
+			</agm-map>
+			<div class="col-lg-5 pull-right">
+				<div class="form-group">
+					<label>Fecha de entrada.</label>
+					<input type="date" name="fromDate" class="form-control">
+				</div>
+				<div class="form-group">
+					<label>Fecha de salida.</label>
+					<input type="date" name="fromDate" class="form-control">
+				</div>
+			</div>
+		</div>
+		<button class="btn btn-success pull-right" [routerLink]="['/gente']">
+			<span class="glyphicon glyphicon glyphicon-search"></span>
+			Buscar
+		</button>
+	</div>
 </div>

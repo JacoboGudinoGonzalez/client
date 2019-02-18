@@ -9,6 +9,7 @@ export class User{
 		public type: string,
 		public rating: number,
 		public description: string,
+		public coordinates: string,
 		public address: string
 	){
 		

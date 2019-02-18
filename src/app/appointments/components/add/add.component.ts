@@ -44,17 +44,16 @@ export class AddComponent implements OnInit {
     this.url = GLOBAL.url + "controller/";
     this.urlApp = GLOBAL.url + "appointmentController/";
     this.page = 1;
-    this.pet = new Pet('',this.identity,0,'',0,0,0);
+    this.pet = new Pet('', this.identity, 0, '', 0, 0, 0);
     this.appointment = new Appointment('', 0, new Date, new Date, this.identity, this.user, this.pet, '');
   }
 
   ngOnInit() {
-    /*if (GLOBAL.verifyIdentity(this.identity)) {
+    if (GLOBAL.verifyIdentity(this.identity)) {
       this._router.navigate(['/login']);
     } else {
-      this.getAppointments(this.user, this.page);
-    }*/
-    this.loadPage();
+      this.loadPage();
+    }
   }
 
   loadPage() {
@@ -88,15 +87,17 @@ export class AddComponent implements OnInit {
   }
 
   onSubmit(form) {
-    this.appointment.toUser=this.user;
+    this.appointment.toUser = this.user;
     this._appointmentService.addAppointment(this.token, this.appointment).subscribe(
       response => {
-        if (response) {
-            form.reset();
-            this.status = 'success';
-        } else {
+        if (response.msj == 0) {
+          this.message = 'Envia los datos necesarios'
           this.status = 'error';
+        } else {
+          form.reset();
+          this.status = 'success';
         }
+        this.sleepExample();
       },
       error => {
         var errorMessage = <any>error;
@@ -164,5 +165,15 @@ export class AddComponent implements OnInit {
       this.noMore = true;
     }
     this.getAppointments(this.page, true);
+  }
+
+  private delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  private async sleepExample() {
+    await this.delay(1500);
+    this.status = '';
+    await this.delay(500);
   }
 }
