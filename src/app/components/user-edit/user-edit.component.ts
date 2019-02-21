@@ -40,7 +40,7 @@ export class UserEditComponent implements OnInit {
 		this.title = 'Mis datos';
 		this.identity = this._userService.getIdentity();
 		this.token = this._userService.getToken();
-		this.user = this.identity;
+		this.user = this.identity; 
 		this.url = GLOBAL.url + "controller/";
 	}
 
@@ -116,8 +116,8 @@ export class UserEditComponent implements OnInit {
 	private initMaps() {
 		//set google maps defaults
 		this.zoom = 16;
-		this.latitude = this.splitAddress(this.user.coordinates,0);
-		this.longitude = this.splitAddress(this.user.coordinates,1);
+		this.latitude = GLOBAL.splitAddress(this.user.coordinates,0);
+		this.longitude = GLOBAL.splitAddress(this.user.coordinates,1);
 
 		//create search FormControl
 		this.searchControl = new FormControl();
@@ -134,7 +134,7 @@ export class UserEditComponent implements OnInit {
 				this.ngZone.run(() => {
 					//get the place result
 					let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
+					this.user.address = place.formatted_address;
 					//verify result
 					if (place.geometry === undefined || place.geometry === null) {
 						return;
@@ -143,14 +143,9 @@ export class UserEditComponent implements OnInit {
 					//set latitude, longitude and zoom
 					this.latitude = place.geometry.location.lat();
 					this.longitude = place.geometry.location.lng();
-					this.zoom = 12;
+					this.zoom = 16;
 				});
 			});
 		});
 	}
-
-	splitAddress(stringToSplit, pos) {
-        let x = stringToSplit.split(" ");
-        return parseFloat(x[pos].replace(",", ""));
-    }
 }

@@ -60,7 +60,7 @@
 			<div class="form-group">
 				<label>Dirección.</label>
 				<input type="text" name="address" #address="ngModel" [(ngModel)]="user.address" class="form-control"
-					placeholder="busca tu dirreccion" autocorrect="off" autocapitalize="off" spellcheck="off" #search
+					placeholder="busca tu direccion" autocorrect="off" autocapitalize="off" spellcheck="off" #search
 					required />
 				<span *ngIf="!address.valid && address.touched">
 					La dirección es obligatoria

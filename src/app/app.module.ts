@@ -18,6 +18,7 @@ import { AppComponent } from './app.component';
 
 import { UserService } from './services/user.service';
 import { UploadService } from './services/upload.service';
+import { ImpoService } from './services/impo.service';
 
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -33,6 +34,7 @@ import { FollowedComponent } from './components/followed/followed.component';
 
 //Servicios
 import { UserGuard } from './services/user.guard';
+import { ImpoComponent } from './components/impo/impo.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { UserGuard } from './services/user.guard';
     PublicationsComponent,
     ProfileComponent,
     FollowingComponent,
-    FollowedComponent
+    FollowedComponent,
+    ImpoComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +68,7 @@ import { UserGuard } from './services/user.guard';
     }),
   ],
   providers: [
-    appRoutingProviders, UserService, UploadService, UserGuard
+    appRoutingProviders, UserService, UploadService, UserGuard, ImpoService
   ],
   bootstrap: [AppComponent]
 })

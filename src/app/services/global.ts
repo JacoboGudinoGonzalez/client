@@ -19,5 +19,10 @@ export var GLOBAL = {
 		if(identity==null){
 			return true;
 		}
-	}
+	},
+
+	splitAddress(stringToSplit, pos) {
+        let x = stringToSplit.split(" ");
+        return parseFloat(x[pos].replace(",", ""));
+    }
 }

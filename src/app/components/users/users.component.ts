@@ -1,5 +1,5 @@
 /// <reference types="@types/googlemaps" />
-import { Component, OnInit, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
     ClickEvent,

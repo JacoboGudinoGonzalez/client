@@ -52,7 +52,7 @@
 
                         <button class="btn btn-success" [routerLink]="['/mensajes/enviar',user.id]"
                             *ngIf="follows.indexOf(user.id) >= 0">
-                            <span class="glyphicon glyphicon glyphicon-calendar"></span>
+                            <span class="glyphicon glyphicon glyphicon-envelope"></span>
                             Enviar mensaje a {{user.name}}
                         </button>
                         <br>

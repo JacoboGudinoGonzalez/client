@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+/// <reference types="@types/googlemaps" />
+import { Component, OnInit, ElementRef, NgZone, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MapsAPILoader } from '@agm/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { FollowService } from '../../services/follow.service';
@@ -14,8 +17,14 @@ import { User } from '../../models/user';
 
 export class ProfileComponent implements OnInit {
 
-  lat: number = 51.678418;
-  lng: number = 7.809007;
+  public latitude: number;
+  public longitude: number;
+  public searchControl: FormControl;
+  public zoom: number;
+
+  @ViewChild("search")
+  public searchElementRef: ElementRef;
+
   public title: string;
   public user: User;
   public status: string;
@@ -30,7 +39,9 @@ export class ProfileComponent implements OnInit {
     private _router: Router,
     private _route: ActivatedRoute,
     private _userService: UserService,
-    private _followService: FollowService
+    private _followService: FollowService,
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone
   ) {
     this.title = 'Perfil';
     this.identity = this._userService.getIdentity();
@@ -38,6 +49,7 @@ export class ProfileComponent implements OnInit {
     this.url = GLOBAL.url + "controller/";
     this.followed = false;
     this.following = false;
+    this.zoom = 16;
   }
 
   ngOnInit() {
@@ -163,4 +175,18 @@ export class ProfileComponent implements OnInit {
     this.followUserOver = 0;
   }
 
+  private setCurrentPosition() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.zoom = 16;
+      });
+    }
+  }
+
+  splitAddress(stringToSplit, pos) {
+    let x = stringToSplit.split(" ");
+    return parseFloat(x[pos].replace(",", ""));
+  }
 }
