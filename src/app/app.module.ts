@@ -34,7 +34,6 @@ import { FollowedComponent } from './components/followed/followed.component';
 
 //Servicios
 import { UserGuard } from './services/user.guard';
-import { ImpoComponent } from './components/impo/impo.component';
 
 @NgModule({
   declarations: [
@@ -49,8 +48,7 @@ import { ImpoComponent } from './components/impo/impo.component';
     PublicationsComponent,
     ProfileComponent,
     FollowingComponent,
-    FollowedComponent,
-    ImpoComponent
+    FollowedComponent
   ],
   imports: [
     BrowserModule,
