@@ -76,7 +76,11 @@
             </div>
         </div>
 
-        <ul class="pagination pull-right">
+        <ul class="pagination pull-right" *ngIf="latitude!=undefined && longitude!=undefined">
+            <li *ngIf="page > 1"><a [routerLink]="['/gente', prev_page, latitude, longitude]">Anterior</a></li>
+            <li *ngIf="pages != page"><a [routerLink]="['/gente', next_page, latitude, longitude]">Siguiente</a></li>
+        </ul>
+        <ul class="pagination pull-right" *ngIf="latitude==undefined && longitude==undefined">
             <li *ngIf="page > 1"><a [routerLink]="['/gente', prev_page]">Anterior</a></li>
             <li *ngIf="pages != page"><a [routerLink]="['/gente', next_page]">Siguiente</a></li>
         </ul>

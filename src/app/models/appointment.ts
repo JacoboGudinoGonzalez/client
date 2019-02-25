@@ -10,6 +10,8 @@ export class Appointment{
 		public fromUser: User,
 		public toUser: User,
 		public pet: Pet,
+		public rating: number,
+		public review: string,
 		public status: string
 	){
 		

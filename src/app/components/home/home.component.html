@@ -1,46 +1,23 @@
-<!--<div class="rela-block container">
-	<div class="rela-block profile-card">
-		<div *ngFor="let user of userArray" class="item">
-			<div class="pad15">
-				<p>{{user.name}}</p>
-				<p class="lead">
-					<img src="{{url+'getImageFile/'+user.image}}" style="width: 100px;">
-				</p>
-				<p>{{user.email}}</p>
-				<p>{{user.tel}}</p>
-				<p>
-					<a *ngFor="let item of BlockID(user.rating); let i=index " (click)="setStar(i)">
-						<i class="fa" [ngClass]="{'fa-star-o':item,'fa-star':!item}"></i>
-					</a>
-				</p>
-			</div>
+<div class="home">
+	<div class="container col-lg-7 pull-right">
+		<h2 class="blanco">{{title}}</h2>
+		<div class="form-group">
+			<input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+				class="form-control" #search>
 		</div>
-	</div>
-</div>-->
-
-<div class="col-lg-8 col-lg-offset-2">
-	<div class="jumbotron">
-
-		<div class="container">
-			<h1>{{title}}</h1>
-			<div class="form-group">
-				<input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off"
-					type="text" class="form-control" #search>
-			</div>
-			<agm-map [latitude]="coordinates.latitude" [longitude]="coordinates.longitude" [zoom]="zoom">
-			</agm-map>
-			<div class="col-lg-5 pull-right">
-				<div class="form-group">
-					<label>Fecha de entrada.</label>
-					<input type="date" name="fromDate" class="form-control">
-				</div>
-				<div class="form-group">
-					<label>Fecha de salida.</label>
-					<input type="date" name="fromDate" class="form-control">
-				</div>
-			</div>
+		<agm-map [latitude]="latitude" [longitude]="longitude" [zoom]="zoom">
+			<agm-marker [latitude]="latitude" [longitude]="longitude">
+			</agm-marker>
+		</agm-map>
+		<div class="form-group">
+			<label class="blanco">Fecha de entrada.</label>
+			<input type="date" name="fromDate" class="form-control">
 		</div>
-		<button class="btn btn-success pull-right" [routerLink]="['/gente']">
+		<div class="form-group">
+			<label class="blanco">Fecha de salida.</label>
+			<input type="date" name="fromDate" class="form-control">
+		</div>
+		<button class="btn btn-success pull-right" [routerLink]="['/gente',1 , latitude, longitude]">
 			<span class="glyphicon glyphicon glyphicon-search"></span>
 			Buscar
 		</button>

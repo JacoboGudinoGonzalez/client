@@ -70,7 +70,7 @@
         </a>
       </div>
     </div>
-    {{ splitAddress(user.coordinates,0) }}
+    
     <agm-map [latitude]="splitAddress(user.coordinates,0)" [longitude]="splitAddress(user.coordinates,1)" [zoom]="zoom">
       <agm-marker [latitude]="splitAddress(user.coordinates,0)" [longitude]="splitAddress(user.coordinates,1)">
       </agm-marker>

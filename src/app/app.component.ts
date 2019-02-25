@@ -18,7 +18,7 @@ export class AppComponent implements DoCheck, OnInit {
       private _userService: UserService,
       private _router: Router
     ){
-    this.title= 'PET';
+    this.title= 'CUIDAR MASCOTAS';
     this.url = GLOBAL.url+"controller/";
   }
 

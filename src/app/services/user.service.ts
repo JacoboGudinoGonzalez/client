@@ -67,6 +67,12 @@ export class UserService{
 		return this._http.get(this.url+"users/"+this.identity.type+"/"+page, {headers: headers});
 	}
 
+	getUsersLocation(page = null, latitude, longitude):Observable<any>{
+		let headers = new HttpHeaders().set('Content-Type','application/json')
+									   .set('Authorization',this.getToken());
+		return this._http.get(this.url+"users/"+this.identity.type+"/"+page+"/"+latitude+"/"+longitude, {headers: headers});
+	}
+
 	getUser(id: string):Observable<any>{
 		let headers = new HttpHeaders().set('Content-Type','application/json')
 									   .set('Authorization',this.getToken());

@@ -43,4 +43,10 @@ export class AppointmentService{
                                        .set('Authorization',token); 
         return this._http.put(this.url+'appointment/'+id+'/'+status, null, {headers:headers})
     }
+
+    changeAppointmentReview(token, id, rating, review):Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type','application/json')
+                                       .set('Authorization',token); 
+        return this._http.put(this.url+'appointment/'+id+'/'+rating+'/'+review, null, {headers:headers})
+    }
 }

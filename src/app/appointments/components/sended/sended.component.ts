@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import {
+    ClickEvent,
+    HoverRatingChangeEvent,
+    RatingChangeEvent
+} from 'angular-star-rating';
 import { Appointment } from '../../../models/appointment';
 import { AppointmentService } from '../../../services/appointment.service';
 import { FollowService } from '../../../services/follow.service';
@@ -26,12 +31,13 @@ export class SendedComponent {
     public follows;
     public followsId: Array<number>;
     public appointments: Appointment[];
+    public rating: number;
+    public review: string;
     public next_page;
     public prev_page;
     public total;
     public page;
     public pages;
-
 
     constructor(
         private _route: ActivatedRoute,
@@ -43,9 +49,10 @@ export class SendedComponent {
         this.title = 'Citas enviadas';
         this.token = this._userService.getToken();
         this.identity = this._userService.getIdentity();
+        this.rating = 0;
         this.urlUser = GLOBAL.url + 'controller/';
         this.user = new User(this.identity == null ? 0 : this.identity.id, '', '', '', '', '', '', 0, '', '', '');
-        this.appointment = new Appointment('', 0, new Date(), new Date(), null, null, null, '');
+        this.appointment = new Appointment('', 0, new Date(), new Date(), null, null, null, 0, '', '');
     }
 
     ngOnInit() {
@@ -146,4 +153,27 @@ export class SendedComponent {
             }
         );
     }
+
+    reviewAppointment(id) {
+        this._appointmenService.changeAppointmentReview(this.token, id, this.rating, this.review).subscribe(
+            response => {
+                this.review='';
+            },
+            error => {
+                var errorMessage = <any>error;
+                if (errorMessage != null) {
+                    this.status = 'error';
+                    if (GLOBAL.unauthorized(errorMessage, this.token)) {
+                        this._router.navigate(['/login']);
+                    } else {
+                        console.log(errorMessage);
+                    }
+                }
+            }
+        );
+    }
+
+    onClick = ($event: ClickEvent) => {
+        this.rating = $event.rating;
+    };
 }

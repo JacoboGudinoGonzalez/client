@@ -39,11 +39,13 @@ export class HomeComponent implements OnInit {
 		private mapsAPILoader: MapsAPILoader,
 		private ngZone: NgZone
 	) {
-		this.title = 'Bienvenido!';
+		this.title = "Bienvenido, deseas que alguien cuide tu mascota? :'V ";
 		this.identity = this._userService.getIdentity();
 		this.token = this._userService.getToken();
 		this.user = this.identity;
-		this.coordinates = null;
+		this.latitude = 0;
+		this.longitude = 0;
+		this.zoom = 14;
 	}
 
 	ngOnInit() {
@@ -51,9 +53,7 @@ export class HomeComponent implements OnInit {
 			this._router.navigate(['/login']);
 		} else {
 			this.initMaps();
-			//set current position
 			this.setCurrentPosition();
-			console.log(this.coordinates);
 		}
 	}
 
@@ -106,20 +106,15 @@ export class HomeComponent implements OnInit {
 		return list;
 	}
 
-	coordinates;
 	private setCurrentPosition() {
 		this._geoLocationService.getPosition().subscribe(
 			(pos: Position) => {
-				this.coordinates = {
-					latitude: +(pos.coords.latitude),
-					longitude: +(pos.coords.longitude)
-				};
+				this.longitude = +pos.coords.longitude;
+				this.latitude = +pos.coords.latitude;
 			});
 	}
 
 	private initMaps() {
-		//set google maps defaults
-		this.zoom = 14;
 
 		//create search FormControl
 		this.searchControl = new FormControl();
@@ -141,7 +136,6 @@ export class HomeComponent implements OnInit {
 					//set latitude, longitude and zoom
 					this.latitude = place.geometry.location.lat();
 					this.longitude = place.geometry.location.lng();
-					this.zoom = 12;
 				});
 			});
 		});

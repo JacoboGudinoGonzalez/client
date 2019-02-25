@@ -40,8 +40,13 @@
                         <br>
                         <!-- Button HTML (to Trigger Modal) -->
                         <a href="#myModal{{appointment.id}}" role="button" class="btn btn-large btn-danger"
-                            data-toggle="modal" *ngIf="appointment.status!=3">
+                            data-toggle="modal" *ngIf="appointment.status!=3 && appointment.status!=2">
                             <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+
+                        <a href="#myModalReview{{appointment.id}}" role="button" class="btn btn-large btn-primary"
+                            data-toggle="modal" *ngIf="appointment.status==2">
+                            <span class="glyphicon glyphicon-check"></span>
                         </a>
 
                         <!-- Modal HTML -->
@@ -62,6 +67,34 @@
                                         <button type="button" class="btn btn-primary" data-dismiss="modal"
                                             (click)="deleteAppointment(appointment.id)">Cancelar
                                             cita</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal HTML -->
+                        <div id="myModalReview{{appointment.id}}" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title">Califica tu cita</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label>Calificacion</label>
+                                        <star-rating [hoverEnabled]="true" [rating]="rating"
+                                            (starClickChange)="onClick($event)">
+                                        </star-rating>
+                                        <label>Reseña</label>
+                                        <textarea cols="30" rows="10" name="review" [(ngModel)]="review"
+                                            class="form-control"></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            (click)="reviewAppointment(appointment.id)">Enviar</button>
                                     </div>
                                 </div>
                             </div>

@@ -35,6 +35,8 @@ export class UsersComponent implements OnInit {
     public follows
     public url;
     public zoom: number;
+    public latitude: number;
+    public longitude: number;
 
     constructor(
         private _route: ActivatedRoute,
@@ -73,13 +75,49 @@ export class UsersComponent implements OnInit {
                     this.prev_page = 1;
                 }
             }
+
             //devolver listado de usuarios
-            this.getUsers(page);
+            if (params['latitude'] && params['longitude']) {
+                this.latitude = params['latitude'];
+                this.longitude = params['longitude']
+                this.getUsersLocation(page, params['latitude'], params['longitude']);
+            }else{
+                this.getUsers(page);
+            }
         });
     }
 
     getUsers(page) {
         this._userService.getUsers(page).subscribe(
+            response => {
+                if (!response.item) {
+                    this.status = 'error';
+                } else {
+                    this.total = response.total;
+                    this.users = response.item;
+                    this.pages = response.pages;
+                    this.follows = response.following;
+                    if (page > this.pages) {
+                        this._router.navigate(['/gente', 1]);
+                    }
+                }
+            },
+            error => {
+                var errorMessage = <any>error;
+                if (errorMessage != null) {
+                    this.status = 'error';
+                    if (GLOBAL.unauthorized(errorMessage, this.token)) {
+                        this._router.navigate(['/login']);
+                    } else {
+                        console.log(errorMessage);
+                    }
+                }
+            }
+        );
+    }
+
+    getUsersLocation(page, latitude, longitude) {
+        this._userService.getUsersLocation(page, latitude, longitude).subscribe(
             response => {
                 if (!response.item) {
                     this.status = 'error';
