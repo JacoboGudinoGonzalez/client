@@ -27,8 +27,7 @@
 				<input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off"
 					type="text" class="form-control" #search>
 			</div>
-			<agm-map [latitude]="latitude" class="pull-left">
-				<agm-marker [latitude]="19.5180056" [longitude]="-99.08916579999999"></agm-marker>
+			<agm-map [latitude]="coordinates.latitude" [longitude]="coordinates.longitude" [zoom]="zoom">
 			</agm-map>
 			<div class="col-lg-5 pull-right">
 				<div class="form-group">

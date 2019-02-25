@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'main',
@@ -13,6 +13,6 @@ export class MainComponent{
     }
 
     ngOnInit(){
-        console.log("componente main cargado");
+        //console.log("componente main cargado");
     }
 }

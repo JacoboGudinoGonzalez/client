@@ -19,6 +19,7 @@ import { AppComponent } from './app.component';
 import { UserService } from './services/user.service';
 import { UploadService } from './services/upload.service';
 import { ImpoService } from './services/impo.service';
+import { GeoLocationService } from './services/geo-location.service';
 
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -66,7 +67,7 @@ import { UserGuard } from './services/user.guard';
     }),
   ],
   providers: [
-    appRoutingProviders, UserService, UploadService, UserGuard, ImpoService
+    appRoutingProviders, UserService, UploadService, UserGuard, ImpoService, GeoLocationService
   ],
   bootstrap: [AppComponent]
 })

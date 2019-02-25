@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { MapsAPILoader } from '@agm/core';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
+import { GeoLocationService } from '../../services/geo-location.service';
 import { UserService } from '../../services/user.service';
 import { GLOBAL } from '../../services/global';
 
@@ -33,6 +34,7 @@ export class HomeComponent implements OnInit {
 
 	constructor(
 		private _userService: UserService,
+		private _geoLocationService: GeoLocationService,
 		private _router: Router,
 		private mapsAPILoader: MapsAPILoader,
 		private ngZone: NgZone
@@ -41,6 +43,7 @@ export class HomeComponent implements OnInit {
 		this.identity = this._userService.getIdentity();
 		this.token = this._userService.getToken();
 		this.user = this.identity;
+		this.coordinates = null;
 	}
 
 	ngOnInit() {
@@ -48,6 +51,9 @@ export class HomeComponent implements OnInit {
 			this._router.navigate(['/login']);
 		} else {
 			this.initMaps();
+			//set current position
+			this.setCurrentPosition();
+			console.log(this.coordinates);
 		}
 	}
 
@@ -100,28 +106,23 @@ export class HomeComponent implements OnInit {
 		return list;
 	}
 
+	coordinates;
 	private setCurrentPosition() {
-		if ("geolocation" in navigator) {
-			navigator.geolocation.getCurrentPosition((position) => {
-				this.latitude = position.coords.latitude;
-				this.longitude = position.coords.longitude;
-				this.zoom = 12;
+		this._geoLocationService.getPosition().subscribe(
+			(pos: Position) => {
+				this.coordinates = {
+					latitude: +(pos.coords.latitude),
+					longitude: +(pos.coords.longitude)
+				};
 			});
-		}
 	}
 
 	private initMaps() {
 		//set google maps defaults
-		this.zoom = 4;
-		this.latitude = 39.8282;
-		this.longitude = -98.5795;
+		this.zoom = 14;
 
 		//create search FormControl
 		this.searchControl = new FormControl();
-
-		//set current position
-		this.setCurrentPosition();
-
 		//load Places Autocomplete
 		this.mapsAPILoader.load().then(() => {
 			let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {

@@ -186,7 +186,10 @@ export class ProfileComponent implements OnInit {
   }
 
   splitAddress(stringToSplit, pos) {
-    let x = stringToSplit.split(" ");
-    return parseFloat(x[pos].replace(",", ""));
+    if(stringToSplit!=""){
+      let x = stringToSplit.split(" ");
+      return parseFloat(x[pos].replace(",", ""));
+    }
+    return 0;
   }
 }
