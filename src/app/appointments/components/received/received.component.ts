@@ -41,7 +41,7 @@ export class ReceivedComponent {
         private _followService: FollowService,
         private _userService: UserService
     ) {
-        this.title = 'Citas enviadas';
+        this.title = 'Citas recibidas';
         this.token = this._userService.getToken();
         this.identity = this._userService.getIdentity();
         this.urlUser = GLOBAL.url + 'controller/';

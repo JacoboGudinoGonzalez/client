@@ -32,17 +32,15 @@
                         </button>
                         &nbsp;
                     </div>
-                    <div class="pull-right">
+                    <div *ngIf="appointment.rating==0" class="pull-right">
                         <p>
                             <span *ngIf="appointment.status==1" class="label label-default">Sin responder</span>
                             <span *ngIf="appointment.status==2" class="label label-success">Aceptada</span>
                             <span *ngIf="appointment.status==3" class="label label-danger">Rechazada</span>
                         </p>
-                        <label *ngIf="appointment.status==1" class="switch switch_default"
-                            role="switch">
+                        <label *ngIf="appointment.status==1" class="switch switch_default" role="switch">
                             <input type="checkbox" class="switch__toggle"
-                                (change)="changeAppointmentStatus(2, appointment.id)"
-                                [checked]="false">
+                                (change)="changeAppointmentStatus(2, appointment.id)" [checked]="false">
                             <span class="switch__label"></span>
                         </label>
                         <label *ngIf="appointment.status==2 || appointment.status==3" class="switch switch_type1"
@@ -53,12 +51,28 @@
                             <span class="switch__label"></span>
                         </label>
                     </div>
+                    <div class="clearfix"></div>
+
+                    <div *ngIf="appointment.rating!=0">
+                        <h3>Reseña</h3><cite>Cita terminada</cite>
+                        <br>
+                        <br>
+                        <div class="alert alert-info" role="alert">
+                            <star-rating [starType]="'svg'" [rating]="appointment.rating" [disabled]="true"
+                                class="pull-left">
+                            </star-rating>
+                            <div class="clearfix"></div>
+                            <p class="alert-link">
+                                &nbsp; <b>{{appointment.fromUser.name}}</b>  <cite class="gray"> dijo: </cite>{{ appointment.review }}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <ul class="pagination pull-right">
-            <li *ngIf="page > 1"><a [routerLink]="['/citas/enviadas', prev_page]">Anterior</a></li>
-            <li *ngIf="pages != page"><a [routerLink]="['/citas/enviadas', next_page]">Siguiente</a></li>
+            <li *ngIf="page > 1"><a [routerLink]="['/citas/recibidas', prev_page]">Anterior</a></li>
+            <li *ngIf="pages != page"><a [routerLink]="['/citas/recibidas', next_page]">Siguiente</a></li>
         </ul>
     </div>
 </div>
